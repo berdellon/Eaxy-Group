@@ -47,9 +47,10 @@ class CajaFuerte(db.Model):
     referencia_op = db.Column(db.Integer, nullable=True)
 
 # Initialize DB (create tables)
-@app.before_first_request
-def create_tables():
+# Crear tablas al iniciar (Flask 3.1+)
+with app.app_context():
     db.create_all()
+
 
 # Simple health check
 @app.route('/api/health', methods=['GET'])
