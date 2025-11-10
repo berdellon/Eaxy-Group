@@ -18,5 +18,5 @@ databases:
     region: Frankfurt
     databaseName: eaxy_db
     user: eaxy_user
-    diskSizeGB: 1
+    
 
