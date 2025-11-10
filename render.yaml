@@ -15,7 +15,7 @@ services:
 databases:
   - name: eaxy-db
     plan: free
-    region: oregon
+    region: Frankfurt
     databaseName: eaxy_db
     user: eaxy_user
     diskSizeGB: 1
