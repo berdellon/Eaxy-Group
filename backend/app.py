@@ -1,15 +1,18 @@
-from flask import Flask, request, jsonify, send_file, current_app
+from flask import Flask, request, jsonify
 from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import func
+from sqlalchemy.exc import OperationalError
 from dotenv import load_dotenv
-import os, io, json, zipfile, datetime
+import os, json, datetime, time
 
+# Cargar variables de entorno
 load_dotenv()
+
 app = Flask(__name__)
 CORS(app)
 
-# Configuration
+# Configuración de base de datos
 DATABASE_URL = os.getenv('DATABASE_URL', 'sqlite:///local.db')
 app.config['SQLALCHEMY_DATABASE_URI'] = DATABASE_URL
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
@@ -17,7 +20,7 @@ app.config['SECRET_KEY'] = os.getenv('SECRET_KEY', 'devkey')
 
 db = SQLAlchemy(app)
 
-# Models
+# Modelos
 class Usuario(db.Model):
     __tablename__ = 'usuarios'
     id = db.Column(db.Integer, primary_key=True)
@@ -46,81 +49,79 @@ class CajaFuerte(db.Model):
     fecha = db.Column(db.DateTime, default=func.now())
     referencia_op = db.Column(db.Integer, nullable=True)
 
-# Initialize DB (create tables)
-# Crear tablas al iniciar (Flask 3.1+)
-with app.app_context():
-    db.create_all()
+# Intentar conectar con la base de datos (reintentos automáticos)
+for intento in range(5):
+    try:
+        with app.app_context():
+            db.create_all()
+        print("✅ Conectado a la base de datos y tablas creadas correctamente.")
+        break
+    except OperationalError as e:
+        print(f"⚠️ Intento {intento + 1}: No se pudo conectar a la base de datos. Reintentando en 5s...")
+        time.sleep(5)
+else:
+    print("❌ No se pudo conectar a la base de datos después de varios intentos.")
 
-
-# Simple health check
+# Rutas
 @app.route('/api/health', methods=['GET'])
 def health():
-    return jsonify({'status':'ok','time': datetime.datetime.utcnow().isoformat()})
+    return jsonify({'status': 'ok', 'time': datetime.datetime.utcnow().isoformat()})
 
-# Login endpoint example (very basic, for demo)
 @app.route('/api/login', methods=['POST'])
 def login():
     body = request.get_json(force=True)
-    nombre = body.get('nombre')
-    pin = body.get('pin')
-    user = Usuario.query.filter_by(nombre=nombre, pin=pin).first()
+    user = Usuario.query.filter_by(nombre=body.get('nombre'), pin=body.get('pin')).first()
     if user:
-        return jsonify({'status':'ok','user':{'id':user.id,'nombre':user.nombre,'rol':user.rol}})
-    else:
-        return jsonify({'error':'invalid credentials'}), 401
+        return jsonify({'status': 'ok', 'user': {'id': user.id, 'nombre': user.nombre, 'rol': user.rol}})
+    return jsonify({'error': 'Credenciales inválidas'}), 401
 
-# Get operaciones
 @app.route('/api/operaciones', methods=['GET'])
 def list_operaciones():
     ops = Operacion.query.order_by(Operacion.fecha.desc()).all()
-    out = []
-    for o in ops:
-        out.append({
+    return jsonify([
+        {
             'id': o.id, 'tipo': o.tipo, 'cliente': o.cliente, 'importe': o.importe,
             'moneda': o.moneda, 'estado': o.estado, 'descripcion': o.descripcion,
             'fecha': o.fecha.isoformat(), 'usuario': o.usuario
-        })
-    return jsonify(out)
+        } for o in ops
+    ])
 
-# Create operacion
 @app.route('/api/operaciones', methods=['POST'])
 def crear_operacion():
     try:
         body = request.get_json(force=True)
         op = Operacion(
-            tipo = body.get('tipo',''),
-            cliente = body.get('cliente'),
-            importe = float(body.get('importe',0) or 0),
-            moneda = body.get('moneda','EUR'),
-            estado = body.get('estado','pendiente'),
-            descripcion = body.get('descripcion'),
-            usuario = body.get('usuario')
+            tipo=body.get('tipo', ''),
+            cliente=body.get('cliente'),
+            importe=float(body.get('importe', 0) or 0),
+            moneda=body.get('moneda', 'EUR'),
+            estado=body.get('estado', 'pendiente'),
+            descripcion=body.get('descripcion'),
+            usuario=body.get('usuario')
         )
         db.session.add(op)
         db.session.commit()
-        return jsonify({'status':'ok','operacion':{'id':op.id}}), 201
+        return jsonify({'status': 'ok', 'operacion': {'id': op.id}}), 201
     except Exception as e:
         db.session.rollback()
-        return jsonify({'error':str(e)}), 500
+        return jsonify({'error': str(e)}), 500
 
-# Update operacion
 @app.route('/api/operaciones/<int:oid>', methods=['PUT'])
 def actualizar_operacion(oid):
     try:
-        body = request.get_json(force=True)
         op = Operacion.query.get(oid)
         if not op:
-            return jsonify({'error':'not found'}), 404
-        for k,v in body.items():
+            return jsonify({'error': 'Operación no encontrada'}), 404
+        body = request.get_json(force=True)
+        for k, v in body.items():
             if hasattr(op, k):
                 setattr(op, k, v)
         db.session.commit()
-        return jsonify({'status':'ok'})
+        return jsonify({'status': 'ok'})
     except Exception as e:
         db.session.rollback()
-        return jsonify({'error':str(e)}), 500
+        return jsonify({'error': str(e)}), 500
 
-# Backup endpoint: export all data as JSON (and as zip)
 @app.route('/api/backup', methods=['GET'])
 def export_backup():
     try:
@@ -128,15 +129,22 @@ def export_backup():
         ops = Operacion.query.all()
         caja = CajaFuerte.query.all()
         data = {
-            'usuarios':[{'id':u.id,'nombre':u.nombre,'rol':u.rol} for u in usuarios],
-            'operaciones':[{'id':o.id,'tipo':o.tipo,'cliente':o.cliente,'importe':o.importe,'moneda':o.moneda,'estado':o.estado,'descripcion':o.descripcion,'fecha':o.fecha.isoformat(),'usuario':o.usuario} for o in ops],
-            'caja_fuerte':[{'id':c.id,'tipo':c.tipo,'importe':c.importe,'nota':c.nota,'fecha':c.fecha.isoformat(),'referencia_op':c.referencia_op} for c in caja]
+            'usuarios': [{'id': u.id, 'nombre': u.nombre, 'rol': u.rol} for u in usuarios],
+            'operaciones': [
+                {'id': o.id, 'tipo': o.tipo, 'cliente': o.cliente, 'importe': o.importe,
+                 'moneda': o.moneda, 'estado': o.estado, 'descripcion': o.descripcion,
+                 'fecha': o.fecha.isoformat(), 'usuario': o.usuario}
+                for o in ops
+            ],
+            'caja_fuerte': [
+                {'id': c.id, 'tipo': c.tipo, 'importe': c.importe, 'nota': c.nota,
+                 'fecha': c.fecha.isoformat(), 'referencia_op': c.referencia_op}
+                for c in caja
+            ]
         }
-        # return JSON directly
         return jsonify(data)
     except Exception as e:
-        return jsonify({'error':str(e)}), 500
+        return jsonify({'error': str(e)}), 500
 
 if __name__ == '__main__':
-    # Run development server
-    app.run(host='0.0.0.0', port=5000, debug=True)
+    app.run(host='0.0.0.0', port=5000)
