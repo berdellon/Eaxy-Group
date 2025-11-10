@@ -10,13 +10,11 @@ services:
           name: eaxy-db
           property: connectionString
       - key: SECRET_KEY
-        value: “pon_aquí_tu_secret”
+        value: eaxy2025secret
 
 databases:
   - name: eaxy-db
     plan: free
-    region: Frankfurt
+    region: frankfurt
     databaseName: eaxy_db
     user: eaxy_user
-    
-
