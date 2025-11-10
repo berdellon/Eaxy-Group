@@ -1,17 +1,22 @@
 services:
   - type: web
     name: eaxy-backend
-    env: docker
+    runtime: docker
     plan: free
     dockerfilePath: Dockerfile
     envVars:
       - key: DATABASE_URL
-        value: ${DATABASE_URL}
+        fromDatabase:
+          name: eaxy-db
+          property: connectionString
       - key: SECRET_KEY
-        value: ${SECRET_KEY}
-  - type: postgres
-    name: eaxy-db
+        value: “pon_aquí_tu_secret”
+
+databases:
+  - name: eaxy-db
     plan: free
-    envVars:
-      - key: DATABASE_URL
-        value: postgresql://postgres:postgres@internal-db:5432/eaxy_db
+    region: oregon
+    databaseName: eaxy_db
+    user: eaxy_user
+    diskSizeGB: 1
+
