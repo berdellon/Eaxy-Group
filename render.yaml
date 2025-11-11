@@ -15,6 +15,6 @@ services:
 databases:
   - name: eaxy-db
     plan: free
-    region: Frankfurt (EU Central)
+    region: Frankfurt
     databaseName: eaxy_db
     user: eaxy_user
