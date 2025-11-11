@@ -18,4 +18,3 @@ databases:
     region: frankfurt
     databaseName: eaxy_db
     user: eaxy_user
-    diskSizeGB: 1
