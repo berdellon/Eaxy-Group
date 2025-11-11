@@ -1,0 +1,2 @@
+console.log('Eaxy frontend');
+async function exportBackup(){const res=await fetch('/api/backup'); if(!res.ok) return alert('backup failed'); const data=await res.json(); const a=document.createElement('a'); const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'}); a.href=URL.createObjectURL(blob); a.download='eaxy_backup.json'; document.body.appendChild(a); a.click(); a.remove();}

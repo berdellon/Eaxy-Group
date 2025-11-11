@@ -6,4 +6,4 @@ COPY . /app
 ENV FLASK_APP=backend/app.py
 ENV PYTHONUNBUFFERED=1
 EXPOSE 5000
-CMD ["python", "-u", "backend/app.py"]
+CMD exec gunicorn --bind 0.0.0.0:${PORT:-5000} "backend.app:app" --workers 2 --threads 4

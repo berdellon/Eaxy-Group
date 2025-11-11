@@ -1,0 +1,1 @@
+CREATE TABLE IF NOT EXISTS usuarios (id serial primary key, nombre varchar, pin varchar, rol varchar); INSERT INTO usuarios (nombre,pin,rol) VALUES ('Admin','1234','admin');
