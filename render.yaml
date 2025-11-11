@@ -4,6 +4,7 @@ services:
     runtime: docker
     plan: free
     region: Frankfurt
+    healthCheckPath: /api/health
     dockerfilePath: Dockerfile
     envVars:
       - key: DATABASE_URL
