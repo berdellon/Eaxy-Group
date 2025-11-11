@@ -3,6 +3,7 @@ services:
     name: eaxy-backend
     runtime: docker
     plan: free
+    region: Frankfurt
     dockerfilePath: Dockerfile
     envVars:
       - key: DATABASE_URL
