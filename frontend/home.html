@@ -1,33 +1,38 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Eaxy Group – Panel</title>
-<link rel="stylesheet" href="static/css/style.css">
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Eaxy Group – Panel</title>
+  <link rel="stylesheet" href="static/css/style.css"/>
 </head>
-<body class="panel-body">
-  <header class="panel-header">
-    <img src="static/icons/eaxy_logo_green_mini.svg" class="logo-mini" 
-alt="Eaxy mini">
-    <h2 class="panel-title">Eaxy Group</h2>
-    <select id="oficina-selector" class="oficina-selector">
+<body class="main-body">
+  <header class="main-header">
+    <img src="static/icons/eaxy_logo_green_mini.svg" class="mini-logo" 
+alt="Eaxy mini"/>
+    <h1 class="panel-title">Panel Eaxy Group</h1>
+    <select id="storeSelector" class="store-selector" 
+aria-label="Seleccionar oficina">
       <option value="Barcelona">Barcelona</option>
       <option value="Madrid">Madrid</option>
     </select>
     <button id="logoutBtn" class="logout-btn">Salir</button>
   </header>
-  <main class="panel-content">
-    <button class="btn-metal color1" 
-id="btnOperaciones">Operaciones</button>
-    <button class="btn-metal color2" id="btnCaja">Caja Fuerte</button>
-    <button class="btn-metal color3" id="btnHistorial">Historial</button>
-    <button class="btn-metal color4" id="btnVerTodas">Ver Todas</button>
-    <button class="btn-metal color5" id="btnBackup">Exportar 
-Backup</button>
+
+  <main class="panel-main">
+    <nav class="menu-buttons">
+      <a class="menu-btn" href="operaciones.html">Operaciones</a>
+      <a class="menu-btn" href="caja_fuerte.html">Caja Fuerte</a>
+      <a class="menu-btn" href="historial.html">Historial</a>
+      <a class="menu-btn" href="ajustes.html">Ajustes</a>
+      <button id="exportBackup" class="menu-btn">Exportar Backup</button>
+    </nav>
+    <section class="panel-welcome">
+      <h2>Pantalla principal</h2>
+      <p>Bienvenido al panel Eaxy. Usa los botones para navegar.</p>
+    </section>
   </main>
-  <footer class="footer-credits">Designed & Developed by <b>Daniel 
-Berdellón</b></footer>
-  <script src="static/js/app.js"></script>
+
+<script src="static/js/app.js"></script>
 </body>
 </html>

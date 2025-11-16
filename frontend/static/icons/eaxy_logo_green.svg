@@ -1,6 +1,8 @@
-<svg width="512" height="512" viewBox="0 0 512 512" 
+<svg width="300" height="90" viewBox="0 0 300 90" 
 xmlns="http://www.w3.org/2000/svg">
-  <rect width="512" height="512" rx="40" fill="#0a0a0a"/>
-  <text x="50%" y="55%" font-size="130" font-family="Poppins, Arial" 
-text-anchor="middle" fill="#65C67A" font-weight="700">EAXY</text>
+<rect width="300" height="90" rx="12" fill="#000"/>
+<text x="150" y="55" font-family="Poppins" font-size="48" fill="#65C67A" 
+text-anchor="middle" font-weight="800">
+Eaxy
+</text>
 </svg>

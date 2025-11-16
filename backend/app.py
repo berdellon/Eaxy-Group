@@ -1,128 +1,101 @@
-import os
-import time
 from flask import Flask, request, jsonify
 from flask_cors import CORS
-from flask_sqlalchemy import SQLAlchemy
-from datetime import datetime
+from sqlalchemy import create_engine, text
+from sqlalchemy.exc import OperationalError
+import os, jwt, datetime, time
 
-# ------------------------------------------------------
-# Configuración Inicial
-# ------------------------------------------------------
 app = Flask(__name__)
 CORS(app)
 
+SECRET_KEY = os.getenv("SECRET_KEY", "eaxysecret")
 DATABASE_URL = os.getenv("DATABASE_URL", "sqlite:///local.db")
 
-# Normalización postgres:// → postgresql://
-if DATABASE_URL.startswith("postgres://") and "sslmode" not in DATABASE_URL:
-    DATABASE_URL = DATABASE_URL.replace("postgres://", "postgresql://") + "?sslmode=require"
+if DATABASE_URL.startswith("postgres://"):
+    DATABASE_URL = DATABASE_URL.replace("postgres://", "postgresql://")
 
-app.config["SQLALCHEMY_DATABASE_URI"] = DATABASE_URL
-app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+print("DB usada:", DATABASE_URL)
 
-db = SQLAlchemy(app)
+engine = create_engine(DATABASE_URL, echo=False, pool_pre_ping=True)
 
-# ------------------------------------------------------
-# MODELOS
-# ------------------------------------------------------
-class User(db.Model):
-    __tablename__ = "users"
-    id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(80), unique=True)
-    password = db.Column(db.String(80))
-    is_admin = db.Column(db.Boolean, default=False)
-    oficina = db.Column(db.String(40), default="Barcelona")  # BCN o MAD
+def create_tables():
+    with engine.connect() as conn:
+        conn.execute(text("""
+        CREATE TABLE IF NOT EXISTS users (
+            id SERIAL PRIMARY KEY,
+            username TEXT UNIQUE,
+            pin TEXT,
+            role TEXT,
+            tienda TEXT
+        );"""))
+        conn.execute(text("""
+        CREATE TABLE IF NOT EXISTS operaciones (
+            id SERIAL PRIMARY KEY,
+            tipo TEXT,
+            cliente TEXT,
+            importe NUMERIC,
+            moneda TEXT,
+            tienda TEXT,
+            fecha TIMESTAMP DEFAULT NOW()
+        );"""))
+        conn.commit()
 
-class Operacion(db.Model):
-    __tablename__ = "operaciones"
-    id = db.Column(db.Integer, primary_key=True)
-    tipo = db.Column(db.String(50))
-    cantidad = db.Column(db.Float)
-    estado = db.Column(db.String(50), default="pendiente")
-    usuario = db.Column(db.String(80))
-    oficina = db.Column(db.String(40))
-    fecha = db.Column(db.DateTime, default=datetime.utcnow)
+def insert_initial_users():
+    with engine.connect() as conn:
+        count = conn.execute(text("SELECT COUNT(*) FROM users")).scalar()
+        if count == 0:
+            conn.execute(text("""
+            INSERT INTO users (username, pin, role, tienda) VALUES
+            ('Dani','1319','admin','Barcelona'),
+            ('Camilo','3852','admin','Barcelona'),
+            ('Madrid','1234','user','Madrid');
+            """))
+            conn.commit()
 
-# ------------------------------------------------------
-# CREACIÓN AUTOMÁTICA DE TABLAS + RETRY SI BD TARDA
-# ------------------------------------------------------
-def conectar_bd_con_reintentos(reintentos=10, espera=5):
-    for intento in range(1, reintentos + 1):
-        try:
-            with app.app_context():
-                db.create_all()
-            print(f"✅ Base de datos conectada (intento {intento})")
-            return True
-        except Exception as e:
-            print(f"⚠️ Intento {intento}: BD no disponible → {e}")
-            time.sleep(espera)
-    print("❌ No se pudo conectar a la BD después de varios intentos.")
-    return False
+ready = False
+for i in range(10):
+    try:
+        with engine.connect() as c:
+            c.execute(text("SELECT 1"))
+        ready = True
+        break
+    except OperationalError:
+        print("DB no lista, reintentando...")
+        time.sleep(2)
 
-conectar_bd_con_reintentos()
+if not ready:
+    print("ERROR: No se pudo conectar a la DB.")
+else:
+    create_tables()
+    insert_initial_users()
+    print("BD lista ✔")
 
-# ------------------------------------------------------
-# ENDPOINTS
-# ------------------------------------------------------
+@app.get("/api/health")
+def health():
+    return jsonify({"ok": True})
 
-@app.route("/")
-def root():
-    return jsonify({"status": "ok", "message": "Eaxy Group Backend Running"}), 200
-
-@app.route("/login", methods=["POST"])
+@app.post("/api/login")
 def login():
     data = request.json
-    user = User.query.filter_by(username=data.get("username")).first()
+    u = data.get("username")
+    p = data.get("pin")
 
-    if not user or user.password != data.get("password"):
-        return jsonify({"error": "Usuario o contraseña incorrectos"}), 401
+    with engine.connect() as conn:
+        r = conn.execute(text(
+            "SELECT id, role, tienda FROM users WHERE username=:u AND 
+pin=:p"
+        ), {"u": u, "p": p}).fetchone()
 
-    return jsonify({
-        "id": user.id,
-        "username": user.username,
-        "is_admin": user.is_admin,
-        "oficina": user.oficina
-    })
+    if not r:
+        return jsonify({"ok": False}), 401
 
-@app.route("/operaciones", methods=["POST"])
-def crear_operacion():
-    data = request.json
-    nueva = Operacion(
-        tipo=data["tipo"],
-        cantidad=data["cantidad"],
-        usuario=data["usuario"],
-        oficina=data["oficina"]
-    )
-    db.session.add(nueva)
-    db.session.commit()
-    return jsonify({"success": True, "id": nueva.id})
+    token = jwt.encode({
+        "id": r.id,
+        "role": r.role,
+        "tienda": r.tienda,
+        "exp": datetime.datetime.utcnow() + datetime.timedelta(hours=12)
+    }, SECRET_KEY, algorithm="HS256")
 
-@app.route("/operaciones/<oficina>", methods=["GET"])
-def listar_operaciones(oficina):
-    ops = Operacion.query.filter_by(oficina=oficina).order_by(Operacion.fecha.desc()).all()
-    lista = [{
-        "id": o.id,
-        "tipo": o.tipo,
-        "cantidad": o.cantidad,
-        "estado": o.estado,
-        "usuario": o.usuario,
-        "fecha": o.fecha.isoformat()
-    } for o in ops]
-    return jsonify(lista)
+    return jsonify({"ok": True, "token": token})
 
-@app.route("/operacion/estado", methods=["PUT"])
-def cambiar_estado():
-    data = request.json
-    op = Operacion.query.get(data["id"])
-    if not op:
-        return jsonify({"error": "No existe"}), 404
-
-    op.estado = data["estado"]
-    db.session.commit()
-    return jsonify({"success": True})
-
-# ------------------------------------------------------
-# MAIN LOCAL
-# ------------------------------------------------------
 if __name__ == "__main__":
-    app.run(debug=True, port=5000)
+    app.run(host="0.0.0.0", port=5000)

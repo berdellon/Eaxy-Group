@@ -1,9 +1,7 @@
 {
   "name": "Eaxy Group",
   "short_name": "Eaxy",
-  "description": "Sistema de gestión interna para Eaxy Group",
   "start_url": "/",
-  "scope": "/",
   "display": "standalone",
   "background_color": "#0a0a0a",
   "theme_color": "#65C67A",

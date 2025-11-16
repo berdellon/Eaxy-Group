@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Operaciones - Eaxy</title>
+  <link rel="stylesheet" href="static/css/style.css"/>
+</head>
+<body>
+  <header class="small-header">
+    <a href="home.html" class="back-link">← Panel</a>
+    <h1>Operaciones</h1>
+  </header>
+  <main class="content">
+    <section>
+      <h2>Nueva Operación</h2>
+      <form id="formOperacion">
+        <label>Tipo <input name="tipo" /></label>
+        <label>Cliente <input name="cliente" /></label>
+        <label>Importe <input name="importe" type="number" step="0.01" 
+/></label>
+        <label>Moneda <input name="moneda" value="EUR" /></label>
+        <button type="submit">Crear</button>
+      </form>
+    </section>
+
+    <section>
+      <h2>Operaciones recientes</h2>
+      <div id="listaOperaciones">Cargando...</div>
+    </section>
+  </main>
+
+<script src="static/js/app.js"></script>
+</body>
+</html>

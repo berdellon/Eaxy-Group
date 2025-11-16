@@ -4,7 +4,5 @@ COPY backend/requirements.txt /app/requirements.txt
 RUN pip install --no-cache-dir -r /app/requirements.txt
 COPY . /app
 ENV FLASK_APP=backend/app.py
-ENV PYTHONUNBUFFERED=1
 EXPOSE 5000
-RUN chmod +x /app/backend/wait_for_db.sh || true
-CMD ["/bin/bash","-lc","/app/backend/wait_for_db.sh"]
+CMD ["python3","backend/app.py"]

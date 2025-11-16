@@ -5,9 +5,7 @@ const urlsToCache = [
   "/home.html",
   "/manifest.json",
   "/static/css/style.css",
-  "/static/js/app.js",
-  "/static/icons/eaxy_logo_green.svg",
-  "/static/icons/eaxy_logo_green_mini.svg"
+  "/static/js/app.js"
 ];
 self.addEventListener("install", event => {
   event.waitUntil(caches.open(CACHE_NAME).then(cache => 
