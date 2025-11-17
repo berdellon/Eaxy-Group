@@ -1,15 +1,13 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
 <head>
-  <meta charset="utf-8"/>
-  <meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <title>Ajustes - Eaxy</title>
-  <link rel="stylesheet" href="static/css/style.css"/>
+  <meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Ajustes — Eaxy</title>
+  <link rel="stylesheet" href="static/css/style.css">
 </head>
 <body>
-  <header class="small-header"><a href="home.html">← 
-Panel</a><h1>Ajustes</h1></header>
-  <main class="content">
+  <header class="small-header"><a href="home.html">← Panel</a><h1>Ajustes</h1></header>
+  <main class="container">
     <form id="settingsForm">
       <label>Oficina por defecto:
         <select name="oficina">
@@ -17,9 +15,11 @@ Panel</a><h1>Ajustes</h1></header>
           <option value="Madrid">Madrid</option>
         </select>
       </label>
-      <button type="submit">Guardar</button>
+      <div class="row">
+        <button type="submit" class="btn-metal">Guardar</button>
+      </div>
     </form>
   </main>
-<script src="static/js/app.js"></script>
+<script src="static/js/app.js" defer></script>
 </body>
 </html>
