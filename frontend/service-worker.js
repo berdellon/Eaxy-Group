@@ -1,18 +1,22 @@
-const CACHE_NAME = "eaxy-cache-v1";
-const urlsToCache = [
-  "/",
-  "/index.html",
-  "/home.html",
-  "/manifest.json",
-  "/static/css/style.css",
-  "/static/js/app.js"
+const CACHE_NAME = 'eaxy-cache-v1';
+const assets = [
+  '/',
+  '/index.html',
+  '/home.html',
+  '/manifest.json',
+  '/static/css/style.css',
+  '/static/js/app.js'
 ];
-self.addEventListener("install", event => {
-  event.waitUntil(caches.open(CACHE_NAME).then(cache => 
-cache.addAll(urlsToCache)));
+
+self.addEventListener('install', evt => {
+  evt.waitUntil(caches.open(CACHE_NAME).then(cache => cache.addAll(assets)));
   self.skipWaiting();
 });
-self.addEventListener("fetch", event => {
-  event.respondWith(caches.match(event.request).then(response => response 
-|| fetch(event.request)));
+
+self.addEventListener('activate', evt => {
+  evt.waitUntil(self.clients.claim());
+});
+
+self.addEventListener('fetch', evt => {
+  evt.respondWith(caches.match(evt.request).then(res => res || fetch(evt.request)));
 });
