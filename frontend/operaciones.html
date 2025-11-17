@@ -1,35 +1,54 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
 <head>
-  <meta charset="utf-8"/>
-  <meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <title>Operaciones - Eaxy</title>
-  <link rel="stylesheet" href="static/css/style.css"/>
+  <meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Operaciones — Eaxy</title>
+  <link rel="stylesheet" href="static/css/style.css">
 </head>
 <body>
   <header class="small-header">
-    <a href="home.html" class="back-link">← Panel</a>
+    <a href="home.html" class="back">← Panel</a>
     <h1>Operaciones</h1>
   </header>
-  <main class="content">
-    <section>
-      <h2>Nueva Operación</h2>
-      <form id="formOperacion">
-        <label>Tipo <input name="tipo" /></label>
+
+  <main class="container">
+    <section class="new-op">
+      <h2>Nueva operación</h2>
+      <form id="opForm">
+        <label>Tipo
+          <select name="tipo">
+            <option value="cash">Cash</option>
+            <option value="envio">Envío</option>
+            <option value="deposito">Depósito</option>
+            <option value="entrada">Entrada</option>
+          </select>
+        </label>
         <label>Cliente <input name="cliente" /></label>
-        <label>Importe <input name="importe" type="number" step="0.01" 
-/></label>
+        <label>Importe <input name="importe" type="number" step="0.01" /></label>
         <label>Moneda <input name="moneda" value="EUR" /></label>
-        <button type="submit">Crear</button>
+        <div class="row">
+          <button type="submit" class="btn-metal">Crear operación</button>
+          <button type="button" id="btnClearOps" class="btn-ghost">Limpiar</button>
+        </div>
       </form>
     </section>
 
-    <section>
+    <section class="list-op">
       <h2>Operaciones recientes</h2>
-      <div id="listaOperaciones">Cargando...</div>
+      <div id="opsList">Cargando...</div>
     </section>
   </main>
 
-<script src="static/js/app.js"></script>
+  <div id="modal" class="modal" aria-hidden="true">
+    <div class="modal-box">
+      <h3 id="modalTitle">Modal</h3>
+      <div id="modalBody"></div>
+      <div class="modal-actions">
+        <button id="modalClose" class="btn-ghost">Cerrar</button>
+      </div>
+    </div>
+  </div>
+
+<script src="static/js/app.js" defer></script>
 </body>
 </html>
