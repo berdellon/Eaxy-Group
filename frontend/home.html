@@ -1,39 +1,45 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
 <head>
 <script>window.FRONTEND_API_URL='https://eaxy-backend.onrender.com/api';</script>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <title>Eaxy Group – Panel</title>
-  <link rel="stylesheet" href="static/css/style.css"/>
+  <title>Eaxy Group — Panel</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" href="static/css/style.css">
 </head>
 <body class="main-body">
-  <header class="main-header">
-    <img src="static/icons/eaxy_logo_green_mini.svg" class="mini-logo" 
-alt="Eaxy mini"/>
-    <h1 class="panel-title">Panel Eaxy Group</h1>
-    <select id="storeSelector" class="store-selector" 
-aria-label="Seleccionar oficina">
-      <option value="Barcelona">Barcelona</option>
-      <option value="Madrid">Madrid</option>
-    </select>
-    <button id="logoutBtn" class="logout-btn">Salir</button>
+  <header class="topbar">
+    <div class="left">
+      <img src="static/icons/eaxy_logo_green_mini.svg" class="mini-logo" alt="Eaxy">
+      <h1 class="app-title">Eaxy Group</h1>
+    </div>
+    <div class="right">
+      <select id="oficinaSelector" class="oficina-selector" aria-label="Selecciona oficina">
+        <option value="Barcelona">Barcelona</option>
+        <option value="Madrid">Madrid</option>
+      </select>
+      <button id="logoutBtn" class="btn-ghost">Salir</button>
+    </div>
   </header>
 
-  <main class="panel-main">
-    <nav class="menu-buttons">
-      <a class="menu-btn" href="operaciones.html">Operaciones</a>
-      <a class="menu-btn" href="caja_fuerte.html">Caja Fuerte</a>
-      <a class="menu-btn" href="historial.html">Historial</a>
-      <a class="menu-btn" href="ajustes.html">Ajustes</a>
-      <button id="exportBackup" class="menu-btn">Exportar Backup</button>
-    </nav>
-    <section class="panel-welcome">
+  <main class="panel">
+    <section class="tiles">
+      <a class="tile btn-metal tile-op" href="operaciones.html">Operaciones</a>
+      <a class="tile btn-metal tile-safe" href="caja_fuerte.html">Caja Fuerte</a>
+      <a class="tile btn-metal tile-history" href="historial.html">Historial</a>
+      <a class="tile btn-metal tile-settings" href="ajustes.html">Ajustes</a>
+      <button id="btnExportBackup" class="tile btn-metal tile-backup">Exportar backup</button>
+    </section>
+
+    <section class="welcome">
       <h2>Pantalla principal</h2>
-      <p>Bienvenido al panel Eaxy. Usa los botones para navegar.</p>
+      <p>Bienvenido al panel Eaxy. Usa los botones para navegar. (Demo)</p>
     </section>
   </main>
 
-<script src="static/js/app.js"></script>
+  <footer class="footer-small">Designed &amp; Developed by <b>Daniel Berdellón</b></footer>
+
+  <script src="static/js/app.js" defer></script>
 </body>
 </html>
