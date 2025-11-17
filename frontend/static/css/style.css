@@ -1,99 +1,90 @@
-/* Fondo login metal + verde iluminado */
-body.login-body {
-    margin: 0;
-    font-family: 'Poppins', sans-serif;
-    background: radial-gradient(circle at top, #0f0f0f 10%, #000 90%);
-    color: white;
+/* VARIABLES */
+:root{
+  --green:#65C67A;
+  --bg1:#070809;
+  --bg2:#0f1620;
+  --card:#0e1114;
+  --glass: rgba(255,255,255,0.03);
+  --accent: linear-gradient(135deg,#3ec77d,#65C67A 60%, #2aa55a);
+  --text:#eaf4ef;
+  --radius:14px;
+  --font:"Poppins",system-ui,Arial;
 }
 
-.login-container {
-    max-width: 380px;
-    margin: 70px auto;
-    text-align: center;
+/* RESET */
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{font-family:var(--font);background:radial-gradient(circle at 10% 10%, #071216 0%, #040506 60%, #000 100%);color:var(--text);-webkit-font-smoothing:antialiased;}
+
+/* CENTER WRAP LOGIN */
+.center-wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:28px}
+.card{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border-radius:var(--radius);padding:26px;box-shadow:0 10px 40px rgba(0,0,0,0.6);width:100%;max-width:420px;border:1px solid rgba(255,255,255,0.04)}
+
+/* LOGO */
+.logo-wrap{text-align:center;margin-bottom:8px}
+.login-logo{width:190px;height:auto;filter:drop-shadow(0 6px 24px rgba(101,198,122,0.18));transition:transform .6s ease}
+
+/* TITLES */
+.title{font-size:20px;text-align:center;margin-top:6px}
+.brand-word{background:linear-gradient(90deg,#e6fff5,#c8ffe0 40%, #74f4a1);-webkit-background-clip:text;-webkit-text-fill-color:transparent;display:inline-block;position:relative}
+.brand-word::after{content:"";position:absolute;left:-5px;right:-5px;top:0;bottom:0;background:linear-gradient(120deg, rgba(255,255,255,0.08), rgba(255,255,255,0));mix-blend-mode:overlay;opacity:0.6;transform:skewX(-10deg) translateX(-120%);animation:shine 3.5s linear infinite}
+
+/* subtitle */
+.subtitle{text-align:center;color:rgba(255,255,255,0.65);margin-bottom:14px}
+
+/* FORM */
+.form{display:flex;flex-direction:column;gap:10px}
+.input{padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,0.06);background:var(--glass);color:var(--text);outline:none}
+.input:focus{box-shadow:0 6px 22px rgba(101,198,122,0.06);border-color:rgba(101,198,122,0.25)}
+
+/* BUTTONS */
+.btn-metal{border-radius:10px;padding:12px 18px;font-weight:700;border:none;cursor:pointer;display:inline-block}
+.btn-primary{background:var(--accent);color:#032;box-shadow:0 8px 30px rgba(38,150,87,0.12);transition:transform .12s ease}
+.btn-primary:active{transform:translateY(1px)}
+.btn-ghost{background:transparent;border:1px solid rgba(255,255,255,0.06);color:var(--text);padding:8px 12px;border-radius:8px}
+
+/* small messages */
+.msg{font-size:13px;color:#ffd2d2;padding-top:6px;text-align:center}
+
+/* Topbar and panel */
+.topbar{display:flex;justify-content:space-between;align-items:center;padding:12px 18px;background:linear-gradient(90deg,var(--bg1),var(--bg2));border-bottom:1px solid rgba(255,255,255,0.03)}
+.left{display:flex;align-items:center;gap:12px}
+.mini-logo{width:44px;height:44px}
+.app-title{font-size:18px}
+.oficina-selector{background:transparent;color:var(--text);border:1px solid rgba(255,255,255,0.04);padding:8px;border-radius:8px}
+
+/* Tiles */
+.panel{padding:20px}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:16px}
+.tile{display:flex;align-items:center;justify-content:center;padding:18px;border-radius:12px;text-decoration:none;color:var(--text);font-weight:700;box-shadow:0 8px 30px rgba(0,0,0,0.35);border:1px solid rgba(255,255,255,0.03)}
+.tile-op{background:linear-gradient(135deg,#0b2a61,#005fa3)}
+.tile-safe{background:linear-gradient(135deg,#a9a9a9,#cfcfcf);color:#071216}
+.tile-history{background:linear-gradient(135deg,#0d3b21,#1b6f3f)}
+.tile-settings{background:linear-gradient(135deg,#26262a,#3a3a3f)}
+.tile-backup{background:linear-gradient(135deg,#26344a,#2e5a7c)}
+
+/* container styles */
+.container{padding:18px;max-width:1000px;margin:0 auto}
+.small-header{display:flex;align-items:center;gap:12px;padding:12px;background:transparent;border-bottom:1px solid rgba(255,255,255,0.03)}
+.back{color:var(--text);text-decoration:none}
+
+/* modal */
+.modal{position:fixed;inset:0;background:rgba(0,0,0,0.6);display:none;align-items:center;justify-content:center;padding:20px}
+.modal.show{display:flex}
+.modal-box{background:linear-gradient(180deg, #0f1114,#0b0d0f);padding:18px;border-radius:12px;min-width:280px;color:var(--text)}
+
+/* responsive */
+@media(min-width:900px){
+  .card{max-width:480px}
+}
+@media(max-width:420px){
+  .title{font-size:18px}
+  .login-logo{width:140px}
 }
 
-.login-logo {
-    width: 150px;
-    filter: drop-shadow(0px 0px 8px #65c67a);
-}
-
-.login-title {
-    font-size: 38px;
-    font-weight: 800;
-    color: #65c67a;
-    margin-top: 15px;
-    text-shadow: 0 0 8px #65c67a;
-}
-
-.login-subtitle {
-    font-size: 18px;
-    opacity: 0.8;
-    margin-bottom: 20px;
-}
-
-.login-box {
-    background: rgba(255,255,255,0.05);
-    padding: 25px;
-    border-radius: 12px;
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255,255,255,0.1);
-}
-
-.login-box input {
-    width: 90%;
-    margin: 10px;
-    padding: 12px;
-    border-radius: 8px;
-    border: none;
-}
-
-.btn-login {
-    margin-top: 15px;
-    padding: 12px 50px;
-    background: linear-gradient(135deg, #65c67a, #2a8f4a);
-    border: none;
-    border-radius: 10px;
-    color: black;
-    font-weight: 700;
-    cursor: pointer;
-    box-shadow: 0 0 10px #65c67a;
-}
-
-/* PANEL */
-.main-body {
-    background: #111;
-    color: white;
-    font-family: 'Poppins', sans-serif;
-}
-
-.main-header {
-    display: flex;
-    align-items: center;
-    background: #0b0b0b;
-    padding: 10px;
-    gap: 10px;
-    border-bottom: 2px solid #65c67a;
-}
-
-.menu-buttons {
-    margin: 20px;
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-}
-
-.menu-btn {
-    padding: 15px;
-    text-align: center;
-    background: linear-gradient(135deg, #1b1b1b, #000);
-    border: 1px solid #65c67a;
-    border-radius: 10px;
-    font-size: 20px;
-    color: #65c67a;
-    text-decoration: none;
-}
-
-.menu-btn:hover {
-    background: #131313;
-    box-shadow: 0 0 10px #65c67a;
+/* shine animation */
+@keyframes shine{
+  0%{transform:translateX(-120%) skewX(-10deg)}
+  50%{transform:translateX(20%) skewX(-10deg)}
+  100%{transform:translateX(120%) skewX(-10deg)}
 }
