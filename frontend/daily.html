@@ -1,19 +1,26 @@
 <!doctype html>
 <html lang="es">
 <head>
-  <meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <title>Daily — Eaxy</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Daily</title>
+
   <link rel="stylesheet" href="static/css/style.css">
+  <script>window.FRONTEND_API_URL='https://eaxy-backend.onrender.com/api'</script>
+  <script src="static/js/app.js" defer></script>
 </head>
+
 <body>
-  <header class="small-header"><a href="home.html">← Panel</a><h1>Daily</h1></header>
-  <main class="container">
-    <section class="card">
-      <label>Fecha: <input type="date" id="dailyDate" /></label>
-      <button id="loadDaily" class="btn-metal">Cargar</button>
-    </section>
-    <section id="dailyList" class="card">Cargando...</section>
-  </main>
-<script src="static/js/app.js" defer></script>
+  <div class="section-wrapper">
+
+    <h1 class="section-title">Daily</h1>
+
+    <div id="dailyList" class="data-box">
+      Cargando movimientos...
+    </div>
+
+    <button onclick="goTo('home.html')" class="btn-metal" style="margin-top:30px">Volver</button>
+
+  </div>
 </body>
 </html>
