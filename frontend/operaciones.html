@@ -1,66 +1,33 @@
 <!doctype html>
 <html lang="es">
 <head>
-  <meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <title>Operaciones — Eaxy</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Operaciones</title>
+
   <link rel="stylesheet" href="static/css/style.css">
-  <label style="display:block;margin-bottom:8px">Oficina:
-  <select id="oficinaSelector" style="padding:8px;border-radius:8px;background:transparent;border:1px solid rgba(255,255,255,0.06)">
-    <option value="Barcelona">Barcelona</option>
-    <option value="Madrid">Madrid</option>
-  </select>
-</label>
-
+  <script>window.FRONTEND_API_URL='https://eaxy-backend.onrender.com/api'</script>
+  <script src="static/js/app.js" defer></script>
 </head>
+
 <body>
-  <header class="small-header">
-    <a href="home.html" class="back">← Panel</a>
-    <h1>Operaciones</h1>
-  </header>
+  <div class="section-wrapper">
 
-  <main class="container">
-    <section class="new-op card">
-      <h2>Nueva operación</h2>
-      <form id="opForm">
-        <label>Tipo
-          <select name="tipo" id="tipoSelect">
-            <option value="cash">Cash</option>
-            <option value="cripto">Cripto</option>
-            <option value="entrada">Entrada</option>
-            <option value="salida">Salida</option>
-          </select>
-        </label>
-        <label>Cliente <input name="cliente" id="cliente" /></label>
-        <label>Importe <input name="importe" id="importe" type="number" step="0.01" /></label>
-        <label>Moneda <input name="moneda" id="moneda" value="EUR" /></label>
+    <h1 class="section-title">Operaciones</h1>
 
-        <div class="row">
-          <button type="submit" class="btn-metal">Crear operación</button>
-          <button type="button" id="btnClear" class="btn-ghost">Limpiar</button>
-        </div>
-      </form>
-    </section>
-
-    <section class="list-op card">
-      <h2>Operaciones recientes</h2>
-      <div id="opsList">Cargando...</div>
-    </section>
-  </main>
-
-  <!-- Modal para estado (recogida pendiente / finalizada) -->
-  <div id="estadoModal" class="modal" aria-hidden="true">
-    <div class="modal-box">
-      <h3 id="estadoTitle">Cambiar estado</h3>
-      <p id="estadoText">Selecciona estado:</p>
-      <div class="row">
-        <button id="btnFinalizada" class="btn-metal">Finalizada</button>
-        <button id="btnPendiente" class="btn-ghost">Recogida pendiente</button>
-        <button id="btnCancel" class="btn-ghost">Cancelar</button>
-      </div>
+    <div class="options-column">
+      <button onclick="openForm('cash')" class="option-btn">Cash</button>
+      <button onclick="openForm('crypto')" class="option-btn">Cripto</button>
+      <button onclick="openForm('entrada')" class="option-btn">Entrada</button>
+      <button onclick="openForm('salida')" class="option-btn">Salida</button>
     </div>
-  </div>
 
-<script src="static/js/app.js" defer></script>
+    <h3 class="section-subtitle">Operaciones recientes</h3>
+    <div id="recentOps" class="recent-box">Sin actividad</div>
+
+    <button onclick="goTo('home.html')" class="btn-metal" style="margin-top:30px">Volver</button>
+
+  </div>
 </body>
 </html>
 
