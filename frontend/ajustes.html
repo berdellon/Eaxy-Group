@@ -8,18 +8,34 @@
 <body>
   <header class="small-header"><a href="home.html">← Panel</a><h1>Ajustes</h1></header>
   <main class="container">
-    <form id="settingsForm">
-      <label>Oficina por defecto:
-        <select name="oficina">
-          <option value="Barcelona">Barcelona</option>
-          <option value="Madrid">Madrid</option>
-        </select>
-      </label>
-      <div class="row">
-        <button type="submit" class="btn-metal">Guardar</button>
-      </div>
-    </form>
+    <section class="card">
+      <h2>Oficina por defecto</h2>
+      <form id="settingsForm">
+        <label>Oficina:
+          <select name="oficina" id="oficinaSetting">
+            <option value="Barcelona">Barcelona</option>
+            <option value="Madrid">Madrid</option>
+          </select>
+        </label>
+        <div class="row"><button type="submit" class="btn-metal">Guardar</button></div>
+      </form>
+    </section>
+
+    <section class="card">
+      <h2>Historial &amp; Informes</h2>
+      <button id="openHist" class="btn-metal">Ver Historial</button>
+      <button id="openReports" class="btn-ghost">Informes detallados</button>
+    </section>
+
+    <section class="card">
+      <h2>Import / Export</h2>
+      <button id="btnExportBackup" class="btn-metal">Exportar backup</button>
+      <input id="importFile" type="file" accept=".json" />
+      <button id="btnImport" class="btn-ghost">Importar backup</button>
+    </section>
   </main>
+
 <script src="static/js/app.js" defer></script>
 </body>
 </html>
+
