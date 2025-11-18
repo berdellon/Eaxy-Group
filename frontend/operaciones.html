@@ -1,23 +1,23 @@
 <!doctype html>
 <html lang="es">
 <head>
-  <meta charset="utf-8"/><meta name="viewport" 
-content="width=device-width,initial-scale=1"/>
+  <meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
   <title>Operaciones — Eaxy</title>
   <link rel="stylesheet" href="static/css/style.css">
-  <script>window.FRONTEND_API_URL = window.FRONTEND_API_URL || 
-'https://eaxy-backend.onrender.com/api';</script>
+  <script>window.FRONTEND_API_URL = window.FRONTEND_API_URL || 'https://eaxy-backend.onrender.com/api';</script>
   <script src="static/js/app.js" defer></script>
 </head>
 <body>
-  <header class="small-header"><a href="home.html" class="back">← 
-Panel</a><h1 class="corporate-text">Operaciones</h1></header>
   <main class="container">
+    <header style="display:flex;align-items:center;gap:12px;margin-bottom:12px">
+      <a href="home.html" class="btn-ghost">← Volver</a>
+      <h1 class="corporate-text">Operaciones</h1>
+    </header>
+
     <section class="card">
       <label>Oficina:
         <select id="oficinaSelectorLocal">
-          <option value="Barcelona">Barcelona</option>
-          <option value="Madrid">Madrid</option>
+          <option>Barcelona</option><option>Madrid</option>
         </select>
       </label>
     </section>
@@ -26,23 +26,14 @@ Panel</a><h1 class="corporate-text">Operaciones</h1></header>
       <h2>Crear operación</h2>
       <form id="opForm">
         <label>Tipo
-          <select name="tipo" id="tipoSelect">
-            <option value="cash">Cash</option>
-            <option value="cripto">Cripto</option>
-            <option value="entrada">Entrada</option>
-            <option value="salida">Salida</option>
-          </select>
+          <select id="tipoSelect"><option value="cash">Cash</option><option value="cripto">Cripto</option><option value="entrada">Entrada</option><option value="salida">Salida</option></select>
         </label>
-        <label>Cliente <input name="cliente" id="cliente" /></label>
-        <label>Importe <input name="importe" id="importe" type="number" 
-step="0.01" /></label>
-        <label>Moneda <input name="moneda" id="moneda" value="EUR" 
-/></label>
-
-        <div class="row" style="margin-top:12px">
+        <label>Cliente <input id="cliente" class="input"/></label>
+        <label>Importe <input id="importe" class="input" type="number" step="0.01"/></label>
+        <label>Moneda <input id="moneda" class="input" value="EUR"/></label>
+        <div style="margin-top:12px;display:flex;gap:8px">
           <button type="submit" class="btn-metal">Crear operación</button>
-          <button type="button" id="btnClear" 
-class="btn-ghost">Limpiar</button>
+          <button type="button" id="btnClear" class="btn-ghost">Limpiar</button>
         </div>
       </form>
     </section>
@@ -51,11 +42,9 @@ class="btn-ghost">Limpiar</button>
       <h2>Operaciones recientes</h2>
       <div id="opsList">Cargando...</div>
     </section>
-  </main>
 
-  <div class="login-footer">
-    <small>Designed &amp; Developed by <strong>Daniel 
-Berdellón</strong></small>
-  </div>
+    <div class="login-footer">Designed &amp; Developed by <strong>Daniel Berdellón</strong></div>
+  </main>
 </body>
 </html>
+
