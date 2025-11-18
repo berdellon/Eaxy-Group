@@ -1,82 +1,166 @@
-/* frontend/static/css/style.css - versión corregida */
-
-/* Root */
-:root{
-  --green:#65C67A;
-  --blue-dark:#001a3d;
-  --blue-mid:#003d66;
-  --blue-light:#2a74ff;
-  --text:#eaf4ef;
-  --card:#071022;
-  --radius:14px;
-  --gap:18px;
-  --font: "Poppins", system-ui, Arial;
+/* ============ GENERALES ============ */
+body {
+  margin: 0;
+  padding: 0;
+  background: linear-gradient(180deg, #001A33, #004080);
+  font-family: "Poppins", sans-serif;
+  color: white;
+  min-height: 100vh;
 }
 
-/* Global - FORZAR azul en TODO */
-*{box-sizing:border-box;margin:0;padding:0}
-html,body{height:100%;width:100%;overflow-x:hidden}
-body{
-  font-family:var(--font);
-  color:var(--text);
-  -webkit-font-smoothing:antialiased;
-  background: linear-gradient(180deg, var(--blue-dark) 0%, var(--blue-mid) 60%, var(--blue-light) 100%);
-  background-attachment: fixed;
-  min-height:100vh;
-  margin:0;
+h1, h2, h3 {
+  color: white;
+  text-shadow: 0 0 8px rgba(0,255,180,0.4);
 }
 
-/* Generic containers */
-.container, .center-wrap, .panel { width:100%; max-width:1100px; margin:0 auto; padding:18px; }
+.container {
+  width: 92%;
+  max-width: 900px;
+  margin: 0 auto;
+  padding-bottom: 80px;
+}
 
-/* Login card */
-.center-wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:28px}
-.card.login-card{max-width:460px;width:100%;background:linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));padding:28px;border-radius:16px;box-shadow:0 12px 40px rgba(0,0,0,0.45);border:1px solid rgba(255,255,255,0.04);}
+/* Footer global */
+.global-footer {
+  position: fixed;
+  bottom: 8px;
+  left: 0;
+  width: 100%;
+  text-align: center;
+  font-size: 12px;
+  opacity: 0.65;
+}
 
-/* Logo */
-.logo-wrap{text-align:center;margin-bottom:12px}
-.login-logo{width:160px;height:auto;filter:drop-shadow(0 8px 30px rgba(42,116,255,0.12));transition:transform .4s}
+/* ============ BOTONES METALIZADOS ============ */
 
-/* Corporate text */
-.corporate-text{background:linear-gradient(90deg,#ffffff,var(--green));-webkit-background-clip:text;-webkit-text-fill-color:transparent;font-weight:700}
+.btn-metal {
+  padding: 16px;
+  margin: 14px 0;
+  border-radius: 14px;
+  width: 100%;
+  font-size: 20px;
+  font-weight: 700;
+  color: white;
+  border: none;
+  cursor: pointer;
+  background: linear-gradient(145deg, #0b3d2e, #19b36a);
+  box-shadow: 0 4px 12px rgba(0,255,120,0.4);
+  transition: 0.25s;
+}
 
-/* Titles / subtitle */
-.title{font-size:20px;text-align:center;margin-top:6px}
-.subtitle{text-align:center;color:rgba(255,255,255,0.85);margin-bottom:12px}
+.btn-metal:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 16px rgba(0,255,120,0.6);
+}
 
-/* Form */
-.form{display:flex;flex-direction:column;gap:12px}
-.input{padding:12px;border-radius:10px;border:none;background:rgba(255,255,255,0.06);color:var(--text);outline:none}
-.input:focus{box-shadow:0 10px 30px rgba(42,116,255,0.09);border-color:rgba(42,116,255,0.15)}
+/* Botón principal verde corporativo */
+.btn-green {
+  background: linear-gradient(145deg, #0b3d2e, #19b36a);
+  box-shadow: 0 4px 12px rgba(0,255,120,0.4);
+}
 
-/* Buttons generic */
-.btn-metal{border-radius:12px;padding:12px 18px;font-weight:700;border:none;cursor:pointer;color:#fff}
-.btn-ghost{background:transparent;border:1px solid rgba(255,255,255,0.06);color:var(--text);padding:10px;border-radius:10px}
+/* Botón azul para navegación */
+.btn-blue {
+  background: linear-gradient(145deg, #003d7a, #0066cc);
+  box-shadow: 0 4px 12px rgba(0,150,255,0.35);
+}
 
-/* Buttons home - metalizados y diferentes colores */
-.menu-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:22px;margin:28px 0}
-.menu-btn{display:flex;align-items:center;justify-content:center;padding:22px;border-radius:14px;color:#fff;font-weight:700;text-decoration:none;box-shadow:0 10px 30px rgba(0,0,0,0.35)}
-.btn-op{background:linear-gradient(135deg,#0f3b6a,#1a6fb2)}       /* azul metal */
-.btn-safe{background:linear-gradient(135deg,#8f947a,#c1c79b); color:#071216}  /* gris metal */
-.btn-daily{background:linear-gradient(135deg,#0e3a23,#1f7a45)}    /* verde metal */
-.btn-settings{background:linear-gradient(135deg,#2d2d34,#5a5a62)} /* oscuro metal */
+/* ============ LOGIN ============ */
 
-/* Panel / tiles */
-.panel{padding:18px;min-height:calc(100vh - 130px)}
-.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:20px}
-.tile{display:flex;align-items:center;justify-content:center;padding:22px;border-radius:12px;text-decoration:none;color:var(--text);font-weight:700;min-height:95px}
+.login-body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
 
-/* Sections and cards */
-.card{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border-radius:12px;padding:18px;margin-bottom:18px}
-.op-item{padding:12px;margin-bottom:12px;border-radius:10px;background:rgba(255,255,255,0.02);display:flex;flex-direction:column;gap:8px}
-.op-meta{font-size:13px;opacity:0.8}
+.login-card {
+  background: rgba(0,0,0,0.25);
+  padding: 24px;
+  border-radius: 18px;
+  width: 90%;
+  max-width: 420px;
+}
 
-/* Footer fixed bottom */
-.login-footer, .footer-home{position:fixed;left:0;right:0;bottom:8px;text-align:center;font-size:13px;color:rgba(255,255,255,0.85)}
+.login-logo {
+  width: 120px;
+  display: block;
+  margin: 0 auto 16px auto;
+}
 
-/* Responsive small */
-@media(max-width:600px){
-  .menu-grid{grid-template-columns:1fr}
-  .login-card{margin:18px}
-  .login-logo{width:140px}
+.input {
+  width: 100%;
+  padding: 14px;
+  border-radius: 12px;
+  border: none;
+  margin-bottom: 16px;
+  font-size: 18px;
+}
+
+#loginBtn {
+  background: linear-gradient(145deg, #0b3d2e, #19b36a);
+}
+
+.brand-word {
+  background: linear-gradient(180deg, #ffffff, #19b36a);
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+/* ============ HOME ============ */
+
+.menu-grid {
+  display: grid;
+  gap: 24px;
+  padding-top: 20px;
+}
+
+.menu-btn {
+  padding: 22px;
+  font-size: 22px;
+  color: white;
+  font-weight: bold;
+  border-radius: 16px;
+  border: none;
+  cursor: pointer;
+  text-align: center;
+}
+
+.menu-ops    { background: linear-gradient(145deg,#063b72,#0e74d6); }
+.menu-caja   { background: linear-gradient(145deg,#194d46,#19b36a); }
+.menu-daily  { background: linear-gradient(145deg,#4c3a64,#8d5dd1); }
+.menu-settings { background: linear-gradient(145deg,#5a5a5a,#aaaaaa); }
+
+/* ============ FORM PAGES (operaciones, ajustes, daily) ============ */
+
+.section {
+  background: rgba(0,0,0,0.25);
+  padding: 22px;
+  border-radius: 16px;
+  margin-top: 16px;
+}
+
+.section h2 {
+  margin-bottom: 18px;
+}
+
+label {
+  display: block;
+  margin-bottom: 6px;
+  opacity: 0.85;
+}
+
+input, select {
+  width: 100%;
+  padding: 14px;
+  font-size: 18px;
+  margin-bottom: 18px;
+  border: none;
+  border-radius: 12px;
+}
+
+.list-box {
+  background: rgba(255,255,255,0.1);
+  padding: 14px;
+  border-radius: 14px;
 }
