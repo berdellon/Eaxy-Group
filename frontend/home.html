@@ -1,30 +1,33 @@
 <!doctype html>
 <html lang="es">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Eaxy Group — Home</title>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Eaxy Group — Panel</title>
   <link rel="stylesheet" href="static/css/style.css">
+  <script>window.FRONTEND_API_URL = window.FRONTEND_API_URL || 'https://eaxy-backend.onrender.com/api';</script>
+  <script src="static/js/app.js" defer></script>
 </head>
-<body class="home-body">
+<body>
+  <main class="container panel">
+    <header style="display:flex;justify-content:space-between;align-items:center">
+      <h1 class="corporate-text">Eaxy Group</h1>
+      <div>
+        <select id="oficinaSelector" class="oficina-selector">
+          <option>Barcelona</option><option>Madrid</option>
+        </select>
+        <button id="logoutBtn" class="btn-ghost">Salir</button>
+      </div>
+    </header>
 
-<header class="top-bar">
-  <h1 class="home-title">Panel Principal</h1>
-</header>
+    <section class="menu-grid">
+      <a href="operaciones.html" class="menu-btn btn-op">Operaciones</a>
+      <a href="caja_fuerte.html" class="menu-btn btn-safe">Caja Fuerte</a>
+      <a href="daily.html" class="menu-btn btn-daily">Daily</a>
+      <a href="ajustes.html" class="menu-btn btn-settings">Ajustes</a>
+    </section>
 
-<div class="menu-grid">
-
-  <a class="menu-btn" href="operaciones.html">Operaciones</a>
-  <a class="menu-btn" href="caja.html">Caja Fuerte</a>
-  <a class="menu-btn" href="daily.html">Daily</a>
-  <a class="menu-btn" href="ajustes.html">Ajustes</a>
-
-</div>
-
-<footer class="footer-home">
-  Designed & Developed by <strong>Daniel Berdellón</strong>
-</footer>
-
-<script src="static/js/app.js" defer></script>
+    <div class="footer-home">Designed &amp; Developed by <strong>Daniel Berdellón</strong></div>
+  </main>
 </body>
 </html>
