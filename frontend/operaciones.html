@@ -1,36 +1,61 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
 <head>
-<script>window.FRONTEND_API_URL='https://eaxy-backend.onrender.com/api';</script>
-  <meta charset="utf-8"/>
-  <meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <title>Operaciones - Eaxy</title>
-  <link rel="stylesheet" href="static/css/style.css"/>
+  <meta charset="utf-8"/><meta name="viewport" 
+content="width=device-width,initial-scale=1"/>
+  <title>Operaciones — Eaxy</title>
+  <link rel="stylesheet" href="static/css/style.css">
+  <script>window.FRONTEND_API_URL = window.FRONTEND_API_URL || 
+'https://eaxy-backend.onrender.com/api';</script>
+  <script src="static/js/app.js" defer></script>
 </head>
 <body>
-  <header class="small-header">
-    <a href="home.html" class="back-link">← Panel</a>
-    <h1>Operaciones</h1>
-  </header>
-  <main class="content">
-    <section>
-      <h2>Nueva Operación</h2>
-      <form id="formOperacion">
-        <label>Tipo <input name="tipo" /></label>
-        <label>Cliente <input name="cliente" /></label>
-        <label>Importe <input name="importe" type="number" step="0.01" 
+  <header class="small-header"><a href="home.html" class="back">← 
+Panel</a><h1 class="corporate-text">Operaciones</h1></header>
+  <main class="container">
+    <section class="card">
+      <label>Oficina:
+        <select id="oficinaSelectorLocal">
+          <option value="Barcelona">Barcelona</option>
+          <option value="Madrid">Madrid</option>
+        </select>
+      </label>
+    </section>
+
+    <section class="card">
+      <h2>Crear operación</h2>
+      <form id="opForm">
+        <label>Tipo
+          <select name="tipo" id="tipoSelect">
+            <option value="cash">Cash</option>
+            <option value="cripto">Cripto</option>
+            <option value="entrada">Entrada</option>
+            <option value="salida">Salida</option>
+          </select>
+        </label>
+        <label>Cliente <input name="cliente" id="cliente" /></label>
+        <label>Importe <input name="importe" id="importe" type="number" 
+step="0.01" /></label>
+        <label>Moneda <input name="moneda" id="moneda" value="EUR" 
 /></label>
-        <label>Moneda <input name="moneda" value="EUR" /></label>
-        <button type="submit">Crear</button>
+
+        <div class="row" style="margin-top:12px">
+          <button type="submit" class="btn-metal">Crear operación</button>
+          <button type="button" id="btnClear" 
+class="btn-ghost">Limpiar</button>
+        </div>
       </form>
     </section>
 
-    <section>
+    <section class="card">
       <h2>Operaciones recientes</h2>
-      <div id="listaOperaciones">Cargando...</div>
+      <div id="opsList">Cargando...</div>
     </section>
   </main>
 
-<script src="static/js/app.js"></script>
+  <div class="login-footer">
+    <small>Designed &amp; Developed by <strong>Daniel 
+Berdellón</strong></small>
+  </div>
 </body>
 </html>

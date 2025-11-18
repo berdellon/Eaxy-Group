@@ -1,34 +1,53 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
 <head>
-<script>window.FRONTEND_API_URL='https://eaxy-backend.onrender.com/api';</script>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" 
-/>
-    <title>Eaxy Group – Login</title>
-    <link rel="stylesheet" href="static/css/style.css" />
-    <link 
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Eaxy Group — Acceso</title>
+
+  <link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" href="static/css/style.css">
+  <link 
 href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" 
-rel="stylesheet" />
+rel="stylesheet">
+
+  <script>
+    window.FRONTEND_API_URL='https://eaxy-backend.onrender.com/api';
+  </script>
 </head>
-
 <body class="login-body">
-    <div class="login-container">
-        <img src="static/icons/eaxy_logo_green.svg" class="login-logo" 
-alt="Eaxy Logo" />
-        <h1 class="login-title">Bienvenido</h1>
-        <h2 class="login-subtitle">Accede a tu panel</h2>
+  <div class="center-wrap">
+    <div class="card login-card">
 
-        <div class="login-box">
-            <input id="username" type="text" placeholder="Usuario" />
-            <input id="password" type="password" placeholder="PIN" />
-            <button id="loginBtn" class="btn-login">Entrar</button>
-        </div>
+      <div class="logo-wrap">
+        <img src="static/icons/eaxy_logo_placeholder.svg" alt="Eaxy Group" 
+class="login-logo">
+      </div>
 
-        <p class="credits">Designed &amp; Developed by <strong>Daniel 
-Berdellón</strong></p>
+      <h1 class="title">
+        Bienvenido a <span class="brand-word">Eaxy Group</span>
+      </h1>
+
+      <p class="subtitle">Accede con tu usuario y PIN</p>
+
+      <div class="form">
+        <input id="username" placeholder="Usuario" class="input"/>
+        <input id="password" placeholder="PIN" class="input" 
+type="password" inputmode="numeric"/>
+
+        <button id="loginBtn" class="btn-metal 
+btn-primary">Entrar</button>
+        <div id="loginMsg" class="msg"></div>
+      </div>
+
+      <footer class="footer-login">
+        <small>Designed & Developed by <strong>Daniel 
+Berdellón</strong></small>
+      </footer>
+
     </div>
+  </div>
 
-    <script src="static/js/app.js"></script>
+<script src="static/js/app.js" defer></script>
 </body>
 </html>

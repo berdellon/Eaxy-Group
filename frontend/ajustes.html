@@ -1,26 +1,55 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
 <head>
-<script>window.FRONTEND_API_URL='https://eaxy-backend.onrender.com/api';</script>
-  <meta charset="utf-8"/>
-  <meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <title>Ajustes - Eaxy</title>
-  <link rel="stylesheet" href="static/css/style.css"/>
+  <meta charset="utf-8"/><meta name="viewport" 
+content="width=device-width,initial-scale=1"/>
+  <title>Ajustes — Eaxy</title>
+  <link rel="stylesheet" href="static/css/style.css">
+  <script>window.FRONTEND_API_URL = window.FRONTEND_API_URL || 
+'https://eaxy-backend.onrender.com/api';</script>
+  <script src="static/js/app.js" defer></script>
 </head>
 <body>
-  <header class="small-header"><a href="home.html">← 
-Panel</a><h1>Ajustes</h1></header>
-  <main class="content">
-    <form id="settingsForm">
-      <label>Oficina por defecto:
-        <select name="oficina">
-          <option value="Barcelona">Barcelona</option>
-          <option value="Madrid">Madrid</option>
-        </select>
-      </label>
-      <button type="submit">Guardar</button>
-    </form>
+  <header class="small-header"><a href="home.html" class="back">← 
+Panel</a><h1 class="corporate-text">Ajustes</h1></header>
+  <main class="container">
+    <section class="card">
+      <h2>Oficina por defecto</h2>
+      <form id="settingsForm">
+        <label>Oficina:
+          <select name="oficina" id="oficinaSetting">
+            <option value="Barcelona">Barcelona</option>
+            <option value="Madrid">Madrid</option>
+          </select>
+        </label>
+        <div class="row"><button type="submit" class="btn-metal" 
+style="margin-top:12px">Guardar</button></div>
+      </form>
+    </section>
+
+    <section class="card">
+      <h2>Historial & Informes</h2>
+      <div class="options-column">
+        <button id="openHist" class="option-btn">Ver Historial</button>
+        <button id="openReports" class="option-btn">Informes 
+detallados</button>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Import / Export</h2>
+      <div style="display:flex;gap:12px;align-items:center">
+        <button id="btnExportBackup" class="btn-metal">Exportar 
+backup</button>
+        <input id="importFile" type="file" accept=".json" />
+        <button id="btnImport" class="btn-ghost">Importar</button>
+      </div>
+    </section>
   </main>
-<script src="static/js/app.js"></script>
+
+  <div class="login-footer">
+    <small>Designed &amp; Developed by <strong>Daniel 
+Berdellón</strong></small>
+  </div>
 </body>
 </html>

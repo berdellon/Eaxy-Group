@@ -1,90 +1,134 @@
-/* VARIABLES */
-:root{
-  --green:#65C67A;
-  --bg1:#070809;
-  --bg2:#0f1620;
-  --card:#0e1114;
-  --glass: rgba(255,255,255,0.03);
-  --accent: linear-gradient(135deg,#3ec77d,#65C67A 60%, #2aa55a);
-  --text:#eaf4ef;
-  --radius:14px;
-  --font:"Poppins",system-ui,Arial;
+/* ------------------------- */
+/*   GENERAL LAYOUT         */
+/* ------------------------- */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Poppins', sans-serif;
 }
 
-/* RESET */
-*{box-sizing:border-box;margin:0;padding:0}
-html,body{height:100%}
-body{font-family:var(--font);background:radial-gradient(circle at 10% 10%, #071216 0%, #040506 60%, #000 100%);color:var(--text);-webkit-font-smoothing:antialiased;}
-
-/* CENTER WRAP LOGIN */
-.center-wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:28px}
-.card{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border-radius:var(--radius);padding:26px;box-shadow:0 10px 40px rgba(0,0,0,0.6);width:100%;max-width:420px;border:1px solid rgba(255,255,255,0.04)}
-
-/* LOGO */
-.logo-wrap{text-align:center;margin-bottom:8px}
-.login-logo{width:190px;height:auto;filter:drop-shadow(0 6px 24px rgba(101,198,122,0.18));transition:transform .6s ease}
-
-/* TITLES */
-.title{font-size:20px;text-align:center;margin-top:6px}
-.brand-word{background:linear-gradient(90deg,#e6fff5,#c8ffe0 40%, #74f4a1);-webkit-background-clip:text;-webkit-text-fill-color:transparent;display:inline-block;position:relative}
-.brand-word::after{content:"";position:absolute;left:-5px;right:-5px;top:0;bottom:0;background:linear-gradient(120deg, rgba(255,255,255,0.08), rgba(255,255,255,0));mix-blend-mode:overlay;opacity:0.6;transform:skewX(-10deg) translateX(-120%);animation:shine 3.5s linear infinite}
-
-/* subtitle */
-.subtitle{text-align:center;color:rgba(255,255,255,0.65);margin-bottom:14px}
-
-/* FORM */
-.form{display:flex;flex-direction:column;gap:10px}
-.input{padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,0.06);background:var(--glass);color:var(--text);outline:none}
-.input:focus{box-shadow:0 6px 22px rgba(101,198,122,0.06);border-color:rgba(101,198,122,0.25)}
-
-/* BUTTONS */
-.btn-metal{border-radius:10px;padding:12px 18px;font-weight:700;border:none;cursor:pointer;display:inline-block}
-.btn-primary{background:var(--accent);color:#032;box-shadow:0 8px 30px rgba(38,150,87,0.12);transition:transform .12s ease}
-.btn-primary:active{transform:translateY(1px)}
-.btn-ghost{background:transparent;border:1px solid rgba(255,255,255,0.06);color:var(--text);padding:8px 12px;border-radius:8px}
-
-/* small messages */
-.msg{font-size:13px;color:#ffd2d2;padding-top:6px;text-align:center}
-
-/* Topbar and panel */
-.topbar{display:flex;justify-content:space-between;align-items:center;padding:12px 18px;background:linear-gradient(90deg,var(--bg1),var(--bg2));border-bottom:1px solid rgba(255,255,255,0.03)}
-.left{display:flex;align-items:center;gap:12px}
-.mini-logo{width:44px;height:44px}
-.app-title{font-size:18px}
-.oficina-selector{background:transparent;color:var(--text);border:1px solid rgba(255,255,255,0.04);padding:8px;border-radius:8px}
-
-/* Tiles */
-.panel{padding:20px}
-.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:16px}
-.tile{display:flex;align-items:center;justify-content:center;padding:18px;border-radius:12px;text-decoration:none;color:var(--text);font-weight:700;box-shadow:0 8px 30px rgba(0,0,0,0.35);border:1px solid rgba(255,255,255,0.03)}
-.tile-op{background:linear-gradient(135deg,#0b2a61,#005fa3)}
-.tile-safe{background:linear-gradient(135deg,#a9a9a9,#cfcfcf);color:#071216}
-.tile-history{background:linear-gradient(135deg,#0d3b21,#1b6f3f)}
-.tile-settings{background:linear-gradient(135deg,#26262a,#3a3a3f)}
-.tile-backup{background:linear-gradient(135deg,#26344a,#2e5a7c)}
-
-/* container styles */
-.container{padding:18px;max-width:1000px;margin:0 auto}
-.small-header{display:flex;align-items:center;gap:12px;padding:12px;background:transparent;border-bottom:1px solid rgba(255,255,255,0.03)}
-.back{color:var(--text);text-decoration:none}
-
-/* modal */
-.modal{position:fixed;inset:0;background:rgba(0,0,0,0.6);display:none;align-items:center;justify-content:center;padding:20px}
-.modal.show{display:flex}
-.modal-box{background:linear-gradient(180deg, #0f1114,#0b0d0f);padding:18px;border-radius:12px;min-width:280px;color:var(--text)}
-
-/* responsive */
-@media(min-width:900px){
-  .card{max-width:480px}
-}
-@media(max-width:420px){
-  .title{font-size:18px}
-  .login-logo{width:140px}
+.login-body {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(180deg, #021B79, #0575E6);
+  background-attachment: fixed;
 }
 
-/* shine animation */
-@keyframes shine{
-  0%{transform:translateX(-120%) skewX(-10deg)}
-  50%{transform:translateX(20%) skewX(-10deg)}
-  100%{transform:translateX(120%) skewX(-10deg)}
+.center-wrap {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.card.login-card {
+  width: 90%;
+  max-width: 420px;
+  background: rgba(0,0,0,0.35);
+  padding: 2rem;
+  border-radius: 20px;
+  backdrop-filter: blur(6px);
+  text-align: center;
+}
+
+/* ------------------------- */
+/* LOGIN STYLE               */
+/* ------------------------- */
+
+.logo-wrap {
+  margin-bottom: 1rem;
+}
+
+.login-logo {
+  width: 120px;
+}
+
+.title {
+  color: white;
+  font-size: 1.9rem;
+  margin-bottom: .5rem;
+}
+
+.brand-word {
+  background: linear-gradient(90deg, #ffffff, #00ff9d);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.subtitle {
+  color: #ccf;
+  margin-bottom: 1.5rem;
+}
+
+.form input {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 14px;
+  border: none;
+  border-radius: 8px;
+}
+
+.btn-metal {
+  width: 100%;
+  padding: 14px;
+  border: none;
+  border-radius: 10px;
+  background: linear-gradient(145deg, #0f0f16, #1f1f29);
+  color: white;
+  cursor: pointer;
+  margin-top: 10px;
+  font-size: 1.1rem;
+}
+
+.footer-login {
+  color: white;
+  margin-top: 20px;
+  opacity: .8;
+}
+
+/* ------------------------- */
+/* HOME PAGE                 */
+/* ------------------------- */
+
+.home-body {
+  background: linear-gradient(180deg, #021B79, #0575E6);
+  min-height: 100vh;
+  padding: 20px;
+}
+
+.home-title {
+  text-align: center;
+  color: white;
+  margin-top: 10px;
+  font-size: 1.8rem;
+}
+
+.menu-grid {
+  margin-top: 40px;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+  padding: 0 20px;
+}
+
+.menu-btn {
+  background: rgba(255,255,255,0.1);
+  text-align: center;
+  padding: 18px;
+  border-radius: 14px;
+  color: white;
+  font-size: 1.3rem;
+  text-decoration: none;
+  backdrop-filter: blur(5px);
+}
+
+.footer-home {
+  position: fixed;
+  bottom: 15px;
+  left: 0;
+  right: 0;
+  text-align: center;
+  color: white;
+  opacity: .8;
 }
