@@ -5,7 +5,6 @@
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
   <title>Eaxy Group — Panel</title>
-  <link rel="manifest" href="manifest.json">
   <link rel="stylesheet" href="static/css/style.css">
 </head>
 <body class="main-body">
@@ -24,17 +23,16 @@
   </header>
 
   <main class="panel">
-    <section class="tiles">
+    <section class="tiles" aria-label="Navegación principal">
       <a class="tile btn-metal tile-op" href="operaciones.html">Operaciones</a>
       <a class="tile btn-metal tile-safe" href="caja_fuerte.html">Caja Fuerte</a>
-      <a class="tile btn-metal tile-history" href="historial.html">Historial</a>
+      <a class="tile btn-metal tile-daily" href="daily.html">Daily</a>
       <a class="tile btn-metal tile-settings" href="ajustes.html">Ajustes</a>
-      <button id="btnExportBackup" class="tile btn-metal tile-backup">Exportar backup</button>
     </section>
 
     <section class="welcome">
-      <h2>Pantalla principal</h2>
-      <p>Bienvenido al panel Eaxy. Usa los botones para navegar. (Demo)</p>
+      <h2>Panel principal</h2>
+      <p>Selecciona una opción para comenzar.</p>
     </section>
   </main>
 
@@ -43,3 +41,4 @@
   <script src="static/js/app.js" defer></script>
 </body>
 </html>
+
