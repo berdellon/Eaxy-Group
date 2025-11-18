@@ -1,134 +1,82 @@
-/* ------------------------- */
-/*   GENERAL LAYOUT         */
-/* ------------------------- */
-body {
-  margin: 0;
-  padding: 0;
-  font-family: 'Poppins', sans-serif;
+/* frontend/static/css/style.css - versión corregida */
+
+/* Root */
+:root{
+  --green:#65C67A;
+  --blue-dark:#001a3d;
+  --blue-mid:#003d66;
+  --blue-light:#2a74ff;
+  --text:#eaf4ef;
+  --card:#071022;
+  --radius:14px;
+  --gap:18px;
+  --font: "Poppins", system-ui, Arial;
 }
 
-.login-body {
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: linear-gradient(180deg, #021B79, #0575E6);
+/* Global - FORZAR azul en TODO */
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;width:100%;overflow-x:hidden}
+body{
+  font-family:var(--font);
+  color:var(--text);
+  -webkit-font-smoothing:antialiased;
+  background: linear-gradient(180deg, var(--blue-dark) 0%, var(--blue-mid) 60%, var(--blue-light) 100%);
   background-attachment: fixed;
+  min-height:100vh;
+  margin:0;
 }
 
-.center-wrap {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-}
+/* Generic containers */
+.container, .center-wrap, .panel { width:100%; max-width:1100px; margin:0 auto; padding:18px; }
 
-.card.login-card {
-  width: 90%;
-  max-width: 420px;
-  background: rgba(0,0,0,0.35);
-  padding: 2rem;
-  border-radius: 20px;
-  backdrop-filter: blur(6px);
-  text-align: center;
-}
+/* Login card */
+.center-wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:28px}
+.card.login-card{max-width:460px;width:100%;background:linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));padding:28px;border-radius:16px;box-shadow:0 12px 40px rgba(0,0,0,0.45);border:1px solid rgba(255,255,255,0.04);}
 
-/* ------------------------- */
-/* LOGIN STYLE               */
-/* ------------------------- */
+/* Logo */
+.logo-wrap{text-align:center;margin-bottom:12px}
+.login-logo{width:160px;height:auto;filter:drop-shadow(0 8px 30px rgba(42,116,255,0.12));transition:transform .4s}
 
-.logo-wrap {
-  margin-bottom: 1rem;
-}
+/* Corporate text */
+.corporate-text{background:linear-gradient(90deg,#ffffff,var(--green));-webkit-background-clip:text;-webkit-text-fill-color:transparent;font-weight:700}
 
-.login-logo {
-  width: 120px;
-}
+/* Titles / subtitle */
+.title{font-size:20px;text-align:center;margin-top:6px}
+.subtitle{text-align:center;color:rgba(255,255,255,0.85);margin-bottom:12px}
 
-.title {
-  color: white;
-  font-size: 1.9rem;
-  margin-bottom: .5rem;
-}
+/* Form */
+.form{display:flex;flex-direction:column;gap:12px}
+.input{padding:12px;border-radius:10px;border:none;background:rgba(255,255,255,0.06);color:var(--text);outline:none}
+.input:focus{box-shadow:0 10px 30px rgba(42,116,255,0.09);border-color:rgba(42,116,255,0.15)}
 
-.brand-word {
-  background: linear-gradient(90deg, #ffffff, #00ff9d);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
+/* Buttons generic */
+.btn-metal{border-radius:12px;padding:12px 18px;font-weight:700;border:none;cursor:pointer;color:#fff}
+.btn-ghost{background:transparent;border:1px solid rgba(255,255,255,0.06);color:var(--text);padding:10px;border-radius:10px}
 
-.subtitle {
-  color: #ccf;
-  margin-bottom: 1.5rem;
-}
+/* Buttons home - metalizados y diferentes colores */
+.menu-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:22px;margin:28px 0}
+.menu-btn{display:flex;align-items:center;justify-content:center;padding:22px;border-radius:14px;color:#fff;font-weight:700;text-decoration:none;box-shadow:0 10px 30px rgba(0,0,0,0.35)}
+.btn-op{background:linear-gradient(135deg,#0f3b6a,#1a6fb2)}       /* azul metal */
+.btn-safe{background:linear-gradient(135deg,#8f947a,#c1c79b); color:#071216}  /* gris metal */
+.btn-daily{background:linear-gradient(135deg,#0e3a23,#1f7a45)}    /* verde metal */
+.btn-settings{background:linear-gradient(135deg,#2d2d34,#5a5a62)} /* oscuro metal */
 
-.form input {
-  width: 100%;
-  padding: 12px;
-  margin-bottom: 14px;
-  border: none;
-  border-radius: 8px;
-}
+/* Panel / tiles */
+.panel{padding:18px;min-height:calc(100vh - 130px)}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:20px}
+.tile{display:flex;align-items:center;justify-content:center;padding:22px;border-radius:12px;text-decoration:none;color:var(--text);font-weight:700;min-height:95px}
 
-.btn-metal {
-  width: 100%;
-  padding: 14px;
-  border: none;
-  border-radius: 10px;
-  background: linear-gradient(145deg, #0f0f16, #1f1f29);
-  color: white;
-  cursor: pointer;
-  margin-top: 10px;
-  font-size: 1.1rem;
-}
+/* Sections and cards */
+.card{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border-radius:12px;padding:18px;margin-bottom:18px}
+.op-item{padding:12px;margin-bottom:12px;border-radius:10px;background:rgba(255,255,255,0.02);display:flex;flex-direction:column;gap:8px}
+.op-meta{font-size:13px;opacity:0.8}
 
-.footer-login {
-  color: white;
-  margin-top: 20px;
-  opacity: .8;
-}
+/* Footer fixed bottom */
+.login-footer, .footer-home{position:fixed;left:0;right:0;bottom:8px;text-align:center;font-size:13px;color:rgba(255,255,255,0.85)}
 
-/* ------------------------- */
-/* HOME PAGE                 */
-/* ------------------------- */
-
-.home-body {
-  background: linear-gradient(180deg, #021B79, #0575E6);
-  min-height: 100vh;
-  padding: 20px;
-}
-
-.home-title {
-  text-align: center;
-  color: white;
-  margin-top: 10px;
-  font-size: 1.8rem;
-}
-
-.menu-grid {
-  margin-top: 40px;
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 20px;
-  padding: 0 20px;
-}
-
-.menu-btn {
-  background: rgba(255,255,255,0.1);
-  text-align: center;
-  padding: 18px;
-  border-radius: 14px;
-  color: white;
-  font-size: 1.3rem;
-  text-decoration: none;
-  backdrop-filter: blur(5px);
-}
-
-.footer-home {
-  position: fixed;
-  bottom: 15px;
-  left: 0;
-  right: 0;
-  text-align: center;
-  color: white;
-  opacity: .8;
+/* Responsive small */
+@media(max-width:600px){
+  .menu-grid{grid-template-columns:1fr}
+  .login-card{margin:18px}
+  .login-logo{width:140px}
 }
