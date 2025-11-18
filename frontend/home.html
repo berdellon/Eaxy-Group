@@ -1,43 +1,31 @@
 <!doctype html>
 <html lang="es">
 <head>
-  <meta charset="utf-8"/>
-  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Eaxy Group — Panel</title>
+
   <link rel="stylesheet" href="static/css/style.css">
-</head>
-<body class="main-body">
-  <header class="topbar">
-    <div class="left">
-      <img src="static/icons/eaxy_logo_green_mini.svg" class="mini-logo" alt="Eaxy">
-      <h1 class="app-title">Eaxy Group</h1>
-    </div>
-    <div class="right">
-      <select id="oficinaSelector" class="oficina-selector" aria-label="Selecciona oficina">
-        <option value="Barcelona">Barcelona</option>
-        <option value="Madrid">Madrid</option>
-      </select>
-      <button id="logoutBtn" class="btn-ghost">Salir</button>
-    </div>
-  </header>
-
-  <main class="panel">
-    <section class="tiles" aria-label="Navegación principal">
-      <a class="tile btn-metal tile-op" href="operaciones.html">Operaciones</a>
-      <a class="tile btn-metal tile-safe" href="caja_fuerte.html">Caja Fuerte</a>
-      <a class="tile btn-metal tile-daily" href="daily.html">Daily</a>
-      <a class="tile btn-metal tile-settings" href="ajustes.html">Ajustes</a>
-    </section>
-
-    <section class="welcome">
-      <h2>Panel principal</h2>
-      <p>Selecciona una opción para comenzar.</p>
-    </section>
-  </main>
-
-  <footer class="footer-small">Designed &amp; Developed by <b>Daniel Berdellón</b></footer>
-
+  <script>window.FRONTEND_API_URL='https://eaxy-backend.onrender.com/api'</script>
   <script src="static/js/app.js" defer></script>
+</head>
+
+<body>
+  <div class="home-container">
+
+    <h1 class="home-title">Panel Principal</h1>
+
+    <div class="menu-grid">
+      <button onclick="goTo('operaciones.html')" class="menu-btn">Operaciones</button>
+      <button onclick="goTo('caja.html')" class="menu-btn">Caja Fuerte</button>
+      <button onclick="goTo('daily.html')" class="menu-btn">Daily</button>
+      <button onclick="goTo('ajustes.html')" class="menu-btn">Ajustes</button>
+    </div>
+
+    <div class="footer">Designed & Developed by <strong>Daniel Berdellón</strong></div>
+
+  </div>
 </body>
 </html>
+
 
