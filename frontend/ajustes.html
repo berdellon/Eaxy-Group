@@ -1,41 +1,31 @@
 <!doctype html>
 <html lang="es">
 <head>
-  <meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <title>Ajustes — Eaxy</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Ajustes</title>
+
   <link rel="stylesheet" href="static/css/style.css">
+  <script>window.FRONTEND_API_URL='https://eaxy-backend.onrender.com/api'</script>
+  <script src="static/js/app.js" defer></script>
 </head>
+
 <body>
-  <header class="small-header"><a href="home.html">← Panel</a><h1>Ajustes</h1></header>
-  <main class="container">
-    <section class="card">
-      <h2>Oficina por defecto</h2>
-      <form id="settingsForm">
-        <label>Oficina:
-          <select name="oficina" id="oficinaSetting">
-            <option value="Barcelona">Barcelona</option>
-            <option value="Madrid">Madrid</option>
-          </select>
-        </label>
-        <div class="row"><button type="submit" class="btn-metal">Guardar</button></div>
-      </form>
-    </section>
+  <div class="section-wrapper">
 
-    <section class="card">
-      <h2>Historial &amp; Informes</h2>
-      <button id="openHist" class="btn-metal">Ver Historial</button>
-      <button id="openReports" class="btn-ghost">Informes detallados</button>
-    </section>
+    <h1 class="section-title">Ajustes</h1>
 
-    <section class="card">
-      <h2>Import / Export</h2>
-      <button id="btnExportBackup" class="btn-metal">Exportar backup</button>
-      <input id="importFile" type="file" accept=".json" />
-      <button id="btnImport" class="btn-ghost">Importar backup</button>
-    </section>
-  </main>
+    <div class="options-column">
+      <button onclick="goTo('historial.html')" class="option-btn">Historial</button>
+      <button onclick="goTo('informes.html')" class="option-btn">Informes</button>
+      <button onclick="goTo('importar.html')" class="option-btn">Importar Backup</button>
+      <button onclick="goTo('exportar.html')" class="option-btn">Exportar Backup</button>
+    </div>
 
-<script src="static/js/app.js" defer></script>
+    <button onclick="goTo('home.html')" class="btn-metal" style="margin-top:30px">Volver</button>
+
+  </div>
 </body>
 </html>
+
 
