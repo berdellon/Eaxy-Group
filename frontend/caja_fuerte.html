@@ -1,32 +1,79 @@
 <!doctype html>
 <html lang="es">
 <head>
-  <meta charset="utf-8"/><meta name="viewport" 
-content="width=device-width,initial-scale=1"/>
+  <meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
   <title>Caja Fuerte — Eaxy</title>
   <link rel="stylesheet" href="static/css/style.css">
-  <script>window.FRONTEND_API_URL = window.FRONTEND_API_URL || 
-'https://eaxy-backend.onrender.com/api';</script>
+  <script>window.FRONTEND_API_URL = window.FRONTEND_API_URL || 'https://eaxy-backend.onrender.com/api';</script>
   <script src="static/js/app.js" defer></script>
+
+  <style>
+    body {
+      background: linear-gradient(180deg, #001733 0%, #003b7a 100%);
+      min-height: 100vh;
+    }
+
+    .safe-card {
+      background: rgba(255,255,255,0.05);
+      backdrop-filter: blur(6px);
+      padding: 18px;
+      border-radius: 16px;
+      margin-bottom: 20px;
+      color: white;
+    }
+
+    .safe-title {
+      font-size: 22px;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+
+    /* NUEVO COLOR GRIS MEDIO ELÉCTRICO PARA CAJA FUERTE */
+    .btn-safe-medium {
+      display: inline-block;
+      padding: 14px 22px;
+      border-radius: 14px;
+      text-decoration: none;
+      color: white;
+      background: linear-gradient(145deg, #4c5d6c, #26323b);
+      font-weight: 600;
+      box-shadow: 0 0 10px rgba(0,255,180,0.2);
+    }
+
+    .footer-fixed {
+      text-align:center;
+      margin-top: 30px;
+      padding-bottom: 10px;
+      color: white;
+      opacity: .85;
+    }
+  </style>
+
 </head>
+
 <body>
-  <header class="small-header"><a href="home.html" class="back">← 
-Panel</a><h1 class="corporate-text">Caja Fuerte</h1></header>
+  <header class="small-header">
+    <a href="home.html" class="back">← Panel</a>
+    <h1 class="corporate-text">Caja Fuerte</h1>
+  </header>
+
   <main class="container">
-    <section class="card">
-      <h2>Saldo</h2>
-      <div id="safeBalance">Cargando...</div>
+
+    <section class="safe-card">
+      <div class="safe-title">Saldo total</div>
+      <div id="safeBalance" style="font-size:26px;font-weight:700;">Cargando...</div>
     </section>
 
-    <section class="card">
-      <h2>Movimientos</h2>
+    <section class="safe-card">
+      <div class="safe-title">Movimientos</div>
       <div id="safeMovs">Cargando...</div>
     </section>
+
   </main>
 
-  <div class="login-footer">
-    <small>Designed &amp; Developed by <strong>Daniel 
-Berdellón</strong></small>
+  <div class="footer-fixed">
+    <small>Designed & Developed by <strong>Daniel Berdellón</strong></small>
   </div>
 </body>
 </html>
+
