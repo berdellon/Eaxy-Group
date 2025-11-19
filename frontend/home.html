@@ -7,14 +7,64 @@
   <link rel="stylesheet" href="static/css/style.css">
   <script>window.FRONTEND_API_URL = window.FRONTEND_API_URL || 'https://eaxy-backend.onrender.com/api';</script>
   <script src="static/js/app.js" defer></script>
+
+  <style>
+    body {
+      background: linear-gradient(180deg, #001733 0%, #003b7a 100%);
+      min-height: 100vh;
+    }
+    .menu-grid {
+      margin-top: 30px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+    }
+    .menu-btn {
+      padding: 22px;
+      border-radius: 16px;
+      text-align: center;
+      font-size: 20px;
+      font-weight: 600;
+      color: white;
+      display: block;
+      text-decoration: none;
+    }
+
+    /* COLORES ORIGINALES RESTAURADOS */
+    .btn-op {
+      background: linear-gradient(145deg, #00e676, #00b34f); /* Verde metal corporativo */
+    }
+    .btn-safe {
+      background: linear-gradient(145deg, #3d3d3d, #161616); /* Gris metal */
+    }
+    .btn-daily {
+      background: linear-gradient(145deg, #1c7cff, #004a99); /* Azul eléctrico */
+    }
+    .btn-settings {
+      background: linear-gradient(145deg, #4f4f4f, #2b2b2b); /* Gris oscuro */
+    }
+
+    .footer-home {
+      margin-top: 40px;
+      text-align: center;
+      color: white;
+      opacity: .85;
+      padding-bottom: 10px;
+    }
+  </style>
+
 </head>
+
 <body>
   <main class="container panel">
+
     <header style="display:flex;justify-content:space-between;align-items:center">
       <h1 class="corporate-text">Eaxy Group</h1>
+
       <div>
         <select id="oficinaSelector" class="oficina-selector">
-          <option>Barcelona</option><option>Madrid</option>
+          <option>Barcelona</option>
+          <option>Madrid</option>
         </select>
         <button id="logoutBtn" class="btn-ghost">Salir</button>
       </div>
@@ -31,3 +81,4 @@
   </main>
 </body>
 </html>
+
