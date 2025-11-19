@@ -1,29 +1,75 @@
 <!doctype html>
 <html lang="es">
 <head>
-  <meta charset="utf-8"/><meta name="viewport" 
-content="width=device-width,initial-scale=1"/>
+  <meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
   <title>Daily — Eaxy</title>
   <link rel="stylesheet" href="static/css/style.css">
-  <script>window.FRONTEND_API_URL = window.FRONTEND_API_URL || 
-'https://eaxy-backend.onrender.com/api';</script>
+  <script>window.FRONTEND_API_URL = window.FRONTEND_API_URL || 'https://eaxy-backend.onrender.com/api';</script>
   <script src="static/js/app.js" defer></script>
+
+  <style>
+    body {
+      background: linear-gradient(180deg, #001733 0%, #003b7a 100%);
+      min-height: 100vh;
+      color: white;
+    }
+
+    .card {
+      background: rgba(255,255,255,0.05);
+      border-radius: 16px;
+      padding: 20px;
+      margin-bottom: 18px;
+      backdrop-filter: blur(6px);
+    }
+
+    .btn-load {
+      width: 100%;
+      padding: 14px;
+      border-radius: 14px;
+      border: none;
+      font-size: 16px;
+      font-weight: 700;
+      color: white;
+      background: linear-gradient(145deg, #00e676, #00b34f);
+      margin-top: 12px;
+      cursor: pointer;
+    }
+
+    .footer-fixed {
+      text-align:center;
+      margin-top: 25px;
+      padding-bottom: 10px;
+      opacity: .85;
+      color: white;
+    }
+  </style>
+
 </head>
+
 <body>
-  <header class="small-header"><a href="home.html" class="back">← 
-Panel</a><h1 class="corporate-text">Daily</h1></header>
+
+  <header class="small-header">
+    <a href="home.html" class="back">← Panel</a>
+    <h1 class="corporate-text">Daily</h1>
+  </header>
+
   <main class="container">
+
     <section class="card">
-      <label>Fecha: <input type="date" id="dailyDate" /></label>
-      <button id="loadDaily" class="btn-metal" 
-style="margin-top:12px">Cargar</button>
+      <label>Fecha</label>
+      <input type="date" id="dailyDate" class="input" style="margin-top:8px">
+      <button id="loadDaily" class="btn-load">Cargar</button>
     </section>
-    <section id="dailyList" class="card">Cargando movimientos...</section>
+
+    <section class="card" id="dailyList">
+      Cargando movimientos...
+    </section>
+
   </main>
 
-  <div class="login-footer">
-    <small>Designed &amp; Developed by <strong>Daniel 
-Berdellón</strong></small>
+  <div class="footer-fixed">
+    <small>Designed & Developed by <strong>Daniel Berdellón</strong></small>
   </div>
+
 </body>
 </html>
