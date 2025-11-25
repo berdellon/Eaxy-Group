@@ -88,17 +88,14 @@ document.addEventListener("DOMContentLoaded", ()=>{
 
     async function loadOps(){
       const r = await fetchJSON(API + "/historial");
-      if(!r.ok || !Array.isArray(r.data)){
+      const ops = r.data?.operaciones || [];
+
+      if(!ops.length){
         list.innerHTML = "<small>Sin actividad</small>";
         return;
       }
 
-      if(!r.data.length){
-        list.innerHTML = "<small>Sin actividad</small>";
-        return;
-      }
-
-      list.innerHTML = r.data.map(o=>`
+      list.innerHTML = ops.map(o=>`
         <div class="op-item">
           <b>${o.tipo}</b> — ${o.importe} ${o.moneda}
           <div class="op-meta">${o.cliente || ''} • ${o.tienda || ''} • ${o.fecha || ''}</div>
@@ -146,14 +143,15 @@ document.addEventListener("DOMContentLoaded", ()=>{
       qs("#safeBalance").textContent = (bal.data?.total || 0) + " EUR";
 
       const h = await fetchJSON(API + "/historial");
+      const ops = h.data?.operaciones || [];
       const movEl = qs("#safeMovs");
 
-      if(!h.ok || !Array.isArray(h.data) || !h.data.length){
+      if(!ops.length){
         movEl.innerHTML = "<small>Sin movimientos</small>";
         return;
       }
 
-      movEl.innerHTML = h.data.slice(0,6).map(o=>`
+      movEl.innerHTML = ops.slice(0,6).map(o=>`
         <div>${o.tipo} ${o.importe} ${o.moneda}</div>
       `).join("");
     })();
@@ -165,19 +163,15 @@ document.addEventListener("DOMContentLoaded", ()=>{
       const date = qs("#dailyDate").value;
       const r = await fetchJSON(API + "/daily" + (date ? "?fecha="+date : ""));
 
+      const ops = r.data?.daily || [];
       const list = qs("#dailyList");
 
-      if(!r.ok || !Array.isArray(r.data)){
+      if(!ops.length){
         list.innerHTML = "<small>Sin movimientos</small>";
         return;
       }
 
-      if(!r.data.length){
-        list.innerHTML = "<small>Sin movimientos</small>";
-        return;
-      }
-
-      list.innerHTML = r.data.map(o=>`
+      list.innerHTML = ops.map(o=>`
         <div class="op-item">${o.tipo} ${o.importe} ${o.moneda} • ${o.fecha}</div>
       `).join("");
     });
@@ -187,6 +181,7 @@ document.addEventListener("DOMContentLoaded", ()=>{
   if(location.pathname.includes("ajustes.html")){
     qs("#btnExportBackup")?.addEventListener("click", async ()=>{
       const r = await fetchJSON(API + "/backup");
+
       if(!r.ok){
         alert("Error al exportar");
         return;
@@ -204,14 +199,15 @@ document.addEventListener("DOMContentLoaded", ()=>{
   if(location.pathname.includes("historial.html")){
     (async ()=>{
       const r = await fetchJSON(API + "/historial");
+      const ops = r.data?.operaciones || [];
       const list = qs("#histList");
 
-      if(!r.ok || !Array.isArray(r.data) || !r.data.length){
+      if(!ops.length){
         list.innerHTML = "<small>Sin historiales</small>";
         return;
       }
 
-      list.innerHTML = r.data.map(o=>`
+      list.innerHTML = ops.map(o=>`
         <div class="op-item">${o.tipo} ${o.importe} ${o.moneda} • ${o.fecha}</div>
       `).join("");
     })();
