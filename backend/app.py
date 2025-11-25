@@ -184,7 +184,10 @@ def historial():
             ORDER BY fecha DESC
         """), {"t": tienda}).mappings().all()
 
-    return jsonify({"operaciones": list(rows)})
+    operaciones = [dict(row) for row in rows]   # ← FIX JSON
+
+    return jsonify({"operaciones": operaciones})
+
 
 
 # -------------------------------------------------------------------------------------
@@ -233,7 +236,10 @@ def daily():
     with engine.connect() as conn:
         rows = conn.execute(text(query), {"t": tienda, "f": fecha}).mappings().all()
 
-    return jsonify({"daily": list(rows)})
+    daily = [dict(row) for row in rows]   # ← FIX JSON
+
+    return jsonify({"daily": daily})
+
 
 
 # -------------------------------------------------------------------------------------
