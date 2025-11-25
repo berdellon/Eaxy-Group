@@ -5,3 +5,4 @@ pyjwt
 sqlalchemy
 psycopg2-binary
 python-dotenv
+gunicorn
