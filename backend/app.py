@@ -152,19 +152,30 @@ def crear_operacion():
     importe = data.get("importe")
     moneda = data.get("moneda", "EUR")
 
-    if not tipo or not importe:
+    if not tipo or importe is None:
         return jsonify({"error": "Datos incompletos"}), 400
 
     tienda = request.user["tienda"]
 
-    with engine.connect() as conn:
-        conn.execute(text("""
-            INSERT INTO operaciones (tipo, cliente, importe, moneda, tienda)
-            VALUES (:t, :c, :i, :m, :ti)
-        """), {"t": tipo, "c": cliente, "i": importe, "m": moneda, "ti": tienda})
-        conn.commit()
+    try:
+        with engine.begin() as conn:   # <-- begin() fuerza commit automático
+            conn.execute(text("""
+                INSERT INTO operaciones (tipo, cliente, importe, moneda, tienda)
+                VALUES (:t, :c, :i, :m, :ti)
+            """), {
+                "t": tipo,
+                "c": cliente,
+                "i": importe,
+                "m": moneda,
+                "ti": tienda
+            })
 
-    return jsonify({"ok": True})
+        return jsonify({"ok": True})
+
+    except Exception as e:
+        print("ERROR INSERT:", str(e))
+        return jsonify({"ok": False, "error": str(e)}), 500
+
 
 
 # -------------------------------------------------------------------------------------
