@@ -1,17 +1,14 @@
 <!doctype html>
 <html lang="es">
 <head>
-  <meta charset="utf-8"/><meta name="viewport" 
-content="width=device-width,initial-scale=1"/>
+  <meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
   <title>Ajustes — Eaxy</title>
   <link rel="stylesheet" href="static/css/style.css">
-  <script>window.FRONTEND_API_URL = window.FRONTEND_API_URL || 
-'https://eaxy-backend.onrender.com/api';</script>
+  <script>window.FRONTEND_API_URL = window.FRONTEND_API_URL || 'https://eaxy-backend.onrender.com/api';</script>
   <script src="static/js/app.js" defer></script>
 </head>
 <body>
-  <header class="small-header"><a href="home.html" class="back">← 
-Panel</a><h1 class="corporate-text">Ajustes</h1></header>
+  <header class="small-header"><a href="home.html" class="back">← Panel</a><h1 class="corporate-text">Ajustes</h1></header>
   <main class="container">
     <section class="card">
       <h2>Oficina por defecto</h2>
@@ -22,8 +19,7 @@ Panel</a><h1 class="corporate-text">Ajustes</h1></header>
             <option value="Madrid">Madrid</option>
           </select>
         </label>
-        <div class="row"><button type="submit" class="btn-metal" 
-style="margin-top:12px">Guardar</button></div>
+        <div class="row"><button type="submit" class="btn-metal" style="margin-top:12px">Guardar</button></div>
       </form>
     </section>
 
@@ -31,16 +27,14 @@ style="margin-top:12px">Guardar</button></div>
       <h2>Historial & Informes</h2>
       <div class="options-column">
         <button id="openHist" class="option-btn">Ver Historial</button>
-        <button id="openReports" class="option-btn">Informes 
-detallados</button>
+        <button id="openReports" class="option-btn">Informes detallados</button>
       </div>
     </section>
 
     <section class="card">
       <h2>Import / Export</h2>
       <div style="display:flex;gap:12px;align-items:center">
-        <button id="btnExportBackup" class="btn-metal">Exportar 
-backup</button>
+        <button id="btnExportBackup" class="btn-metal">Exportar backup</button>
         <input id="importFile" type="file" accept=".json" />
         <button id="btnImport" class="btn-ghost">Importar</button>
       </div>
@@ -48,8 +42,16 @@ backup</button>
   </main>
 
   <div class="login-footer">
-    <small>Designed &amp; Developed by <strong>Daniel 
-Berdellón</strong></small>
+    <small>Designed &amp; Developed by <strong>Daniel Berdellón</strong></small>
   </div>
+
+  <script>
+    // navegación rápida (si app.js no lo tiene)
+    document.addEventListener('DOMContentLoaded', ()=>{
+      document.getElementById('openHist')?.addEventListener('click', ()=> window.location.href='historial.html');
+      document.getElementById('openReports')?.addEventListener('click', ()=> window.location.href='informes.html');
+    });
+  </script>
 </body>
 </html>
+
