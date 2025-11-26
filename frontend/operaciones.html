@@ -1,115 +1,76 @@
 <!doctype html>
 <html lang="es">
 <head>
-  <meta charset="utf-8"/>
-  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
   <title>Operaciones — Eaxy</title>
-
   <link rel="stylesheet" href="static/css/style.css">
-  <script>
-    window.FRONTEND_API_URL = window.FRONTEND_API_URL || "https://eaxy-backend.onrender.com/api";
-  </script>
+  <script>window.FRONTEND_API_URL = window.FRONTEND_API_URL || 'https://eaxy-backend.onrender.com/api';</script>
   <script src="static/js/app.js" defer></script>
-
-  <style>
-    body {
-      background: linear-gradient(180deg, #001733 0%, #003b7a 100%);
-      min-height: 100vh;
-    }
-    .card {
-      margin-bottom: 22px;
-    }
-    h2 {
-      margin-bottom: 14px;
-    }
-    #opsList .op-item {
-      background: rgba(255,255,255,0.08);
-      padding: 10px 12px;
-      border-radius: 10px;
-      margin-bottom: 10px;
-    }
-    .btn-primary-green {
-      background: linear-gradient(145deg, #00e676, #00b34f);
-      color: white;
-      padding: 10px 16px;
-      border-radius: 10px;
-      border: none;
-      font-weight: 600;
-      font-size: 15px;
-      cursor: pointer;
-      flex: 1;
-    }
-    .btn-primary-green:active {
-      transform: scale(.97);
-    }
-  </style>
 </head>
-
 <body>
   <main class="container">
-
-    <!-- HEADER -->
-    <header style="display:flex;align-items:center;gap:12px;margin-bottom:20px">
-      <a href="home.html" class="btn-ghost">← Volver</a>
+    <header class="small-header">
+      <a href="home.html" class="back">← Volver</a>
       <h1 class="corporate-text">Operaciones</h1>
     </header>
 
-    <!-- SELECCIÓN OFICINA -->
     <section class="card">
-      <label>Oficina:
-        <select id="oficinaSelectorLocal" class="input">
-          <option>Barcelona</option>
-          <option>Madrid</option>
-        </select>
-      </label>
-    </section>
-
-    <!-- CREAR OPERACIÓN -->
-    <section class="card">
-      <h2 class="corporate-text">Crear operación</h2>
-
-      <form id="opForm">
-
-        <label>Tipo
+      <div class="form-grid">
+        <div style="flex:1">
+          <label class="label">Tipo</label>
           <select id="tipoSelect" class="input">
             <option value="cash">Cash</option>
             <option value="cripto">Cripto</option>
             <option value="entrada">Entrada</option>
             <option value="salida">Salida</option>
           </select>
-        </label>
-
-        <label>Cliente
-          <input id="cliente" class="input" placeholder="Nombre del cliente"/>
-        </label>
-
-        <label>Importe
-          <input id="importe" class="input" type="number" step="0.01" placeholder="0.00"/>
-        </label>
-
-        <label>Moneda
-          <input id="moneda" class="input" value="EUR"/>
-        </label>
-
-        <div style="margin-top:18px;display:flex;gap:12px">
-          <button type="submit" class="btn-primary-green">Crear operación</button>
-          <button type="button" id="btnClear" class="btn-ghost" style="flex:1">Limpiar</button>
         </div>
 
-      </form>
+        <div style="flex:1">
+          <label class="label">Cliente</label>
+          <input id="cliente" class="input" placeholder="Nombre del cliente"/>
+        </div>
+
+        <div style="flex:1">
+          <label class="label">Importe</label>
+          <input id="importe" class="input" type="number" step="0.01" placeholder="0.00"/>
+        </div>
+
+        <div style="flex:1">
+          <label class="label">Moneda</label>
+          <input id="moneda" class="input" value="EUR"/>
+        </div>
+      </div>
+
+      <div style="margin-top:16px;display:flex;gap:12px">
+        <button type="submit" class="btn-primary-green" id="crearOpBtn">Crear operación</button>
+        <button type="button" id="btnClear" class="btn-ghost">Limpiar</button>
+      </div>
     </section>
 
-    <!-- LISTA DE OPERACIONES -->
     <section class="card">
-      <h2 class="corporate-text">Operaciones recientes</h2>
+      <h2>Operaciones recientes</h2>
       <div id="opsList">Cargando...</div>
     </section>
 
-    <!-- FOOTER -->
-    <footer class="login-footer" style="margin-top:40px;margin-bottom:8px;text-align:center">
-      Designed &amp; Developed by <strong>Daniel Berdellón</strong>
-    </footer>
-
+    <div class="login-footer">Designed &amp; Developed by <strong>Daniel Berdellón</strong></div>
   </main>
+
+  <script>
+    // pequeño puente para usar el formulario original que espera app.js
+    document.addEventListener('DOMContentLoaded', ()=>{
+      document.getElementById('crearOpBtn')?.addEventListener('click', ()=>{
+        const form = document.getElementById('opForm');
+        // si no existe, emular submit con app.js loadOps (app.js maneja opForm.submit)
+        const evt = new Event('submit');
+        const fakeForm = document.createElement('form');
+        fakeForm.id = 'opForm';
+        fakeForm.innerHTML = '';
+        document.body.appendChild(fakeForm);
+        fakeForm.dispatchEvent(evt);
+        fakeForm.remove();
+      });
+    });
+  </script>
 </body>
 </html>
