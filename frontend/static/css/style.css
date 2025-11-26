@@ -1,166 +1,150 @@
-/* ============ GENERALES ============ */
-body {
-  margin: 0;
-  padding: 0;
-  background: linear-gradient(180deg, #001A33, #004080);
-  font-family: "Poppins", sans-serif;
-  color: white;
-  min-height: 100vh;
+/* style.css — Eaxy Group (actualizado) */
+
+/* reset mínimo */
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;height:100%}
+body{
+  font-family: 'Poppins', system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  background: linear-gradient(180deg,#001733 0%, #003b7a 100%);
+  color:#fff;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  min-height:100vh;
+  overflow-x:hidden; /* evita margenes blancos al estirar */
 }
 
-h1, h2, h3 {
-  color: white;
-  text-shadow: 0 0 8px rgba(0,255,180,0.4);
+/* layout general: hacer que el footer se quede abajo */
+main.container{
+  max-width:1100px;
+  margin:20px auto;
+  padding:18px;
+  display:flex;
+  flex-direction:column;
+  min-height:calc(100vh - 40px);
 }
 
-.container {
-  width: 92%;
-  max-width: 900px;
-  margin: 0 auto;
-  padding-bottom: 80px;
+/* card */
+.card{
+  background:rgba(255,255,255,0.03);
+  border-radius:14px;
+  padding:16px;
+  margin-bottom:18px;
+  box-shadow:0 6px 18px rgba(0,0,0,0.25);
 }
 
-/* Footer global */
-.global-footer {
-  position: fixed;
-  bottom: 8px;
-  left: 0;
-  width: 100%;
-  text-align: center;
-  font-size: 12px;
-  opacity: 0.65;
+/* footers */
+.footer-home, .login-footer, .small-footer{
+  text-align:center;
+  color:#fff;
+  opacity:.9;
+  margin-top:auto;
 }
 
-/* ============ BOTONES METALIZADOS ============ */
-
-.btn-metal {
-  padding: 16px;
-  margin: 14px 0;
-  border-radius: 14px;
-  width: 100%;
-  font-size: 20px;
-  font-weight: 700;
-  color: white;
-  border: none;
-  cursor: pointer;
-  background: linear-gradient(145deg, #0b3d2e, #19b36a);
-  box-shadow: 0 4px 12px rgba(0,255,120,0.4);
-  transition: 0.25s;
+/* login specifics */
+.login-body{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  min-height:100vh;
+  padding:12px;
 }
 
-.btn-metal:hover {
-  transform: scale(1.05);
-  box-shadow: 0 6px 16px rgba(0,255,120,0.6);
+.center-wrap{width:100%;max-width:420px;margin:0 auto}
+.login-card{
+  background:linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.02));
+  border-radius:16px;
+  padding:20px;
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+  box-shadow:0 12px 30px rgba(0,0,0,0.5);
 }
 
-/* Botón principal verde corporativo */
-.btn-green {
-  background: linear-gradient(145deg, #0b3d2e, #19b36a);
-  box-shadow: 0 4px 12px rgba(0,255,120,0.4);
+.logo-wrap{text-align:center}
+.login-logo{height:68px;width:auto;margin-bottom:4px}
+
+.title{font-size:20px;margin:0;text-align:center}
+.subtitle{font-size:13px;margin:0;text-align:center;color:rgba(255,255,255,0.85)}
+
+.form{display:flex;flex-direction:column;gap:10px;margin-top:8px}
+.input{
+  width:100%;
+  padding:12px 14px;
+  border-radius:10px;
+  border:none;
+  outline:none;
+  background:rgba(255,255,255,0.04);
+  color:white;
+  font-size:15px;
 }
 
-/* Botón azul para navegación */
-.btn-blue {
-  background: linear-gradient(145deg, #003d7a, #0066cc);
-  box-shadow: 0 4px 12px rgba(0,150,255,0.35);
+/* office panel */
+.office-panel{display:none;flex-direction:column;gap:8px}
+.office-panel.active{display:flex}
+
+/* botones */
+.btn-ghost{
+  background:transparent;
+  border:1px solid rgba(255,255,255,0.08);
+  padding:10px 12px;border-radius:10px;color:white;
+  cursor:pointer;font-weight:600;
+}
+.btn-ghost.small{padding:6px 8px;font-size:13px}
+
+.btn-metal{
+  padding:12px 16px;border-radius:12px;border:none;cursor:pointer;font-weight:700;
+  background:linear-gradient(145deg,#1c7cff,#004a99);
+  color:white;
+  box-shadow:0 6px 18px rgba(7,45,90,0.45);
+}
+.btn-primary{
+  background:linear-gradient(145deg,#00e676,#00b34f);
+  color:white;
+  padding:12px 16px;border-radius:12px;border:none;cursor:pointer;font-weight:800;
+  box-shadow:0 8px 26px rgba(0,179,79,0.18);
 }
 
-/* ============ LOGIN ============ */
-
-.login-body {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
+/* green primary used in operaciones */
+.btn-primary-green{
+  background:linear-gradient(145deg,#00e676,#00b34f);
+  color:white;padding:12px 18px;border-radius:12px;border:none;font-weight:800;cursor:pointer;
+  box-shadow:0 8px 26px rgba(0,179,79,0.12);
 }
 
-.login-card {
-  background: rgba(0,0,0,0.25);
-  padding: 24px;
-  border-radius: 18px;
-  width: 90%;
-  max-width: 420px;
+/* menu grid in home */
+.menu-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;margin-top:28px}
+.menu-btn{display:block;padding:22px;border-radius:16px;text-align:center;font-size:18px;font-weight:800;color:white;text-decoration:none}
+.btn-op{background:linear-gradient(145deg,#00e676,#00b34f)} /* verde */
+.btn-safe{background:linear-gradient(145deg,#6e7f8c,#3f5561)} /* gris medio eléctrico */
+.btn-daily{background:linear-gradient(145deg,#1c7cff,#004a99)} /* azul */
+.btn-settings{background:linear-gradient(145deg,#4f4f4f,#2b2b2b)} /* oscuro */
+
+/* tablas y listados */
+.op-item{padding:10px;border-radius:10px;margin-bottom:10px;background:rgba(255,255,255,0.03)}
+.op-meta{font-size:12px;color:rgba(255,255,255,0.7);margin-top:6px}
+
+/* small header */
+.small-header{display:flex;align-items:center;gap:12px;padding:8px 0}
+.small-header .back{color:white;text-decoration:none;opacity:.9}
+
+/* form grid (operaciones) */
+.form-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.label{display:block;font-size:12px;color:rgba(255,255,255,0.9);margin-bottom:6px}
+
+/* options column */
+.options-column{display:flex;flex-direction:column;gap:10px}
+.option-btn{padding:12px;border-radius:12px;border:none;background:linear-gradient(145deg,#00e676,#00b34f);color:white;font-weight:700}
+
+/* responsive */
+@media (max-width:720px){
+  main.container{padding:14px}
+  .form-grid{grid-template-columns:1fr}
+  .menu-grid{grid-template-columns:1fr 1fr}
+  .login-card{padding:16px}
+  .title{font-size:18px}
+  .login-logo{height:60px}
+  .footer-home, .login-footer{font-size:13px}
 }
 
-.login-logo {
-  width: 120px;
-  display: block;
-  margin: 0 auto 16px auto;
-}
-
-.input {
-  width: 100%;
-  padding: 14px;
-  border-radius: 12px;
-  border: none;
-  margin-bottom: 16px;
-  font-size: 18px;
-}
-
-#loginBtn {
-  background: linear-gradient(145deg, #0b3d2e, #19b36a);
-}
-
-.brand-word {
-  background: linear-gradient(180deg, #ffffff, #19b36a);
-  -webkit-background-clip: text;
-  color: transparent;
-}
-
-/* ============ HOME ============ */
-
-.menu-grid {
-  display: grid;
-  gap: 24px;
-  padding-top: 20px;
-}
-
-.menu-btn {
-  padding: 22px;
-  font-size: 22px;
-  color: white;
-  font-weight: bold;
-  border-radius: 16px;
-  border: none;
-  cursor: pointer;
-  text-align: center;
-}
-
-.menu-ops    { background: linear-gradient(145deg,#063b72,#0e74d6); }
-.menu-caja   { background: linear-gradient(145deg,#194d46,#19b36a); }
-.menu-daily  { background: linear-gradient(145deg,#4c3a64,#8d5dd1); }
-.menu-settings { background: linear-gradient(145deg,#5a5a5a,#aaaaaa); }
-
-/* ============ FORM PAGES (operaciones, ajustes, daily) ============ */
-
-.section {
-  background: rgba(0,0,0,0.25);
-  padding: 22px;
-  border-radius: 16px;
-  margin-top: 16px;
-}
-
-.section h2 {
-  margin-bottom: 18px;
-}
-
-label {
-  display: block;
-  margin-bottom: 6px;
-  opacity: 0.85;
-}
-
-input, select {
-  width: 100%;
-  padding: 14px;
-  font-size: 18px;
-  margin-bottom: 18px;
-  border: none;
-  border-radius: 12px;
-}
-
-.list-box {
-  background: rgba(255,255,255,0.1);
-  padding: 14px;
-  border-radius: 14px;
-}
+/* evitar que el body muestre franjas blancas cuando se estira */
+html,body{background-attachment:fixed}
