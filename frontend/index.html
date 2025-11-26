@@ -7,47 +7,45 @@
 
   <link rel="manifest" href="manifest.json">
   <link rel="stylesheet" href="static/css/style.css">
-  <link 
-href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" 
-rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
 
-  <script>
-    window.FRONTEND_API_URL='https://eaxy-backend.onrender.com/api';
-  </script>
+  <script>window.FRONTEND_API_URL='https://eaxy-backend.onrender.com/api'</script>
 </head>
 <body class="login-body">
   <div class="center-wrap">
     <div class="card login-card">
-
       <div class="logo-wrap">
-        <img src="static/icons/eaxy_logo_placeholder.svg" alt="Eaxy Group" 
-class="login-logo">
+        <img src="static/icons/eaxy_logo_green.svg" alt="Eaxy Group" class="login-logo">
       </div>
 
-      <h1 class="title">
-        Bienvenido a <span class="brand-word">Eaxy Group</span>
-      </h1>
-
+      <h1 class="title">Bienvenido a <span class="brand-word">Eaxy Group</span></h1>
       <p class="subtitle">Accede con tu usuario y PIN</p>
 
       <div class="form">
-        <input id="username" placeholder="Usuario" class="input"/>
-        <input id="password" placeholder="PIN" class="input" 
-type="password" inputmode="numeric"/>
+        <input id="username" placeholder="Usuario" class="input" autocomplete="username"/>
+        <div class="row" style="gap:8px;align-items:center;">
+          <input id="password" placeholder="PIN" class="input" type="tel" inputmode="numeric" pattern="[0-9]*" autocomplete="one-time-code" />
+          <button id="toggleOfficeBtn" class="btn-ghost small">Sede</button>
+        </div>
 
-        <button id="loginBtn" class="btn-metal 
-btn-primary">Entrar</button>
+        <!-- pestaña oficina (oculta por defecto) -->
+        <div id="officePanel" class="office-panel" aria-hidden="true">
+          <label class="small-label">Selecciona oficina</label>
+          <select id="oficinaSelectorLogin" class="input">
+            <option>Barcelona</option>
+            <option>Madrid</option>
+          </select>
+        </div>
+
+        <button id="loginBtn" class="btn-metal btn-primary">Entrar</button>
         <div id="loginMsg" class="msg"></div>
       </div>
 
-      <footer class="footer-login">
-        <small>Designed & Developed by <strong>Daniel 
-Berdellón</strong></small>
-      </footer>
-
+      <div class="login-footer small-footer">Designed &amp; Developed by <strong>Daniel Berdellón</strong></div>
     </div>
   </div>
 
-<script src="static/js/app.js" defer></script>
+  <script src="static/js/app.js" defer></script>
 </body>
 </html>
+
