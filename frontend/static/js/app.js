@@ -45,6 +45,35 @@ async function fetchJSON(url, opts = {}){
 
 document.addEventListener("DOMContentLoaded", ()=>{
 
+/* ====== RESPONSIVE Y AJUSTES AUTOMÁTICOS MÓVIL ====== */
+(function() {
+  const isMobile = window.matchMedia("(max-width: 768px)").matches;
+
+  if (isMobile) {
+    // Ajustar inputs y botones de login
+    const loginBox = document.querySelector(".login-container");
+    if (loginBox) {
+      loginBox.style.width = "92%";
+      loginBox.style.margin = "0 auto";
+      loginBox.style.padding = "20px";
+    }
+
+    const btn = document.getElementById("loginBtn");
+    if (btn) {
+      btn.style.width = "100%";
+      btn.style.fontSize = "1.2rem";
+    }
+
+    // Evitar márgenes blancos en scroll
+    document.body.style.overflowX = "hidden";
+
+    // Asegurar que todo el contenido ajusta a pantalla
+    document.documentElement.style.width = "100%";
+    document.documentElement.style.maxWidth = "100%";
+  }
+})();
+
+   
   /* ========== LOGIN ========== */
   if(qs("#loginBtn")){
     qs("#loginBtn").addEventListener("click", async ()=>{
