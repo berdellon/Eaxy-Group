@@ -3,38 +3,37 @@
 <head>
   <meta charset="UTF-8">
   <title>EAXY - Login</title>
-  <link rel="stylesheet" href="static/css/style.css">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="static/css/style.css">
 </head>
 
 <body class="login-body">
 
   <div class="login-container">
-    <h1 class="title">EAXY</h1>
+    <img src="static/icons/eaxy_logo_green.svg" class="login-logo" alt="EAXY">
 
-    <label>Usuario</label>
+    <label for="username">Usuario</label>
     <input id="username" type="text" placeholder="Usuario">
 
-    <label>PIN</label>
+    <label for="password">PIN</label>
     <input id="password" type="password" placeholder="••••">
 
-    <label>Tienda</label>
+    <label for="tiendaSelect">Delegación</label>
     <select id="tiendaSelect">
       <option value="Barcelona">Barcelona</option>
       <option value="Madrid">Madrid</option>
-      <option value="Sants">Sants</option>
-      <option value="Aeropuerto">Aeropuerto</option>
     </select>
 
     <button id="loginBtn" class="btn-metal">Entrar</button>
-    <div id="loginMsg" class="msg"></div>
+    <div id="loginMsg" class="login-msg"></div>
   </div>
 
   <footer class="footer">
-    Designed & developed by EAXY © 2025  
+    Designed & Developed by EAXY © 2025
   </footer>
 
   <script src="static/js/app.js"></script>
 </body>
 </html>
+
 
