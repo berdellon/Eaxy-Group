@@ -1,76 +1,63 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <title>Operaciones — Eaxy</title>
+  <meta charset="UTF-8">
+  <title>EAXY - Operaciones</title>
   <link rel="stylesheet" href="static/css/style.css">
-  <script>window.FRONTEND_API_URL = window.FRONTEND_API_URL || 'https://eaxy-backend.onrender.com/api';</script>
-  <script src="static/js/app.js" defer></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
+
 <body>
-  <main class="container">
-    <header class="small-header">
-      <a href="home.html" class="back">← Volver</a>
-      <h1 class="corporate-text">Operaciones</h1>
-    </header>
 
-    <section class="card">
-      <div class="form-grid">
-        <div style="flex:1">
-          <label class="label">Tipo</label>
-          <select id="tipoSelect" class="input">
-            <option value="cash">Cash</option>
-            <option value="cripto">Cripto</option>
-            <option value="entrada">Entrada</option>
-            <option value="salida">Salida</option>
-          </select>
-        </div>
+<header class="header">
+  <h2>Operaciones</h2>
+  <button onclick="window.location.href='home.html'" class="btn-small">⟵ Volver</button>
+</header>
 
-        <div style="flex:1">
-          <label class="label">Cliente</label>
-          <input id="cliente" class="input" placeholder="Nombre del cliente"/>
-        </div>
+<div class="content">
+  <button id="openModalOp" class="btn-metal">+ Nueva Operación</button>
 
-        <div style="flex:1">
-          <label class="label">Importe</label>
-          <input id="importe" class="input" type="number" step="0.01" placeholder="0.00"/>
-        </div>
+  <div id="opsList" class="ops-list">
+    Cargando operaciones...
+  </div>
+</div>
 
-        <div style="flex:1">
-          <label class="label">Moneda</label>
-          <input id="moneda" class="input" value="EUR"/>
-        </div>
-      </div>
+<!-- MODAL -->
+<div id="opModal" class="modal hidden">
+  <div class="modal-content">
+    <h2>Nueva operación</h2>
 
-      <div style="margin-top:16px;display:flex;gap:12px">
-        <button type="submit" class="btn-primary-green" id="crearOpBtn">Crear operación</button>
-        <button type="button" id="btnClear" class="btn-ghost">Limpiar</button>
-      </div>
-    </section>
+    <label>Tipo</label>
+    <select id="m_tipo">
+      <option value="compra">Compra</option>
+      <option value="venta">Venta</option>
+      <option value="envio">Envío</option>
+      <option value="deposito">Depósito</option>
+    </select>
 
-    <section class="card">
-      <h2>Operaciones recientes</h2>
-      <div id="opsList">Cargando...</div>
-    </section>
+    <label>Cliente</label>
+    <input id="m_cliente" type="text">
 
-    <div class="login-footer">Designed &amp; Developed by <strong>Daniel Berdellón</strong></div>
-  </main>
+    <label>Importe</label>
+    <input id="m_importe" type="number">
 
-  <script>
-    // pequeño puente para usar el formulario original que espera app.js
-    document.addEventListener('DOMContentLoaded', ()=>{
-      document.getElementById('crearOpBtn')?.addEventListener('click', ()=>{
-        const form = document.getElementById('opForm');
-        // si no existe, emular submit con app.js loadOps (app.js maneja opForm.submit)
-        const evt = new Event('submit');
-        const fakeForm = document.createElement('form');
-        fakeForm.id = 'opForm';
-        fakeForm.innerHTML = '';
-        document.body.appendChild(fakeForm);
-        fakeForm.dispatchEvent(evt);
-        fakeForm.remove();
-      });
-    });
-  </script>
+    <label>Moneda</label>
+    <select id="m_moneda">
+      <option value="EUR">EUR</option>
+      <option value="USD">USD</option>
+      <option value="GBP">GBP</option>
+    </select>
+
+    <button id="m_save" class="btn-metal">Crear operación</button>
+    <button id="m_close" class="btn-close">Cerrar</button>
+  </div>
+</div>
+
+<footer class="footer">
+  Designed & developed by EAXY © 2025
+</footer>
+
+<script src="static/js/app.js"></script>
 </body>
 </html>
+
