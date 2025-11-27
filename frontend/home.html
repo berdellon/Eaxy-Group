@@ -1,32 +1,32 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="utf-8"/>
-  <meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <title>Eaxy Group — Panel</title>
+  <meta charset="UTF-8">
+  <title>EAXY - Home</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="static/css/style.css">
-  <script>window.FRONTEND_API_URL = window.FRONTEND_API_URL || 'https://eaxy-backend.onrender.com/api';</script>
-  <script src="static/js/app.js" defer></script>
 </head>
-<body>
-  <main class="container panel">
-    <header class="panel-header" style="display:flex;justify-content:space-between;align-items:center">
-      <h1 class="corporate-text">Eaxy Group</h1>
-      <div style="display:flex;gap:8px;align-items:center">
-        <button id="logoutBtn" class="btn-ghost">Salir</button>
-      </div>
-    </header>
 
-    <section class="menu-grid">
-      <a href="operaciones.html" class="menu-btn btn-op">Operaciones</a>
-      <a href="caja_fuerte.html" class="menu-btn btn-safe">Caja Fuerte</a>
-      <a href="daily.html" class="menu-btn btn-daily">Daily</a>
-      <a href="ajustes.html" class="menu-btn btn-settings">Ajustes</a>
-    </section>
+<body class="home-body">
 
-    <div class="footer-home">Designed &amp; Developed by <strong>Daniel Berdellón</strong></div>
-  </main>
+  <div class="home-container">
+    <img src="static/icons/eaxy_logo_green.svg" class="home-logo">
+
+    <div class="home-menu">
+      <a class="btn-metal" href="operaciones.html">Operaciones</a>
+      <a class="btn-metal" href="caja_fuerte.html" id="btnCaja">Caja Fuerte</a>
+      <a class="btn-metal" href="historial.html">Historial</a>
+      <a class="btn-metal" href="daily.html">Daily</a>
+      <a class="btn-metal" href="ajustes.html">Ajustes</a>
+      <button id="logoutBtn" class="btn-metal btn-logout">Salir</button>
+    </div>
+  </div>
+
+  <footer class="footer">
+    Designed & Developed by EAXY © 2025
+  </footer>
+
+  <script src="static/js/app.js"></script>
 </body>
 </html>
-
 
