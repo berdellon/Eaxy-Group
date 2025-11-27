@@ -1,158 +1,137 @@
-/* ====== GENERAL ====== */
+/* ========= GENERAL ========= */
 body {
-  background: #0a1630;
-  color: white;
   margin: 0;
   font-family: Arial, sans-serif;
-  overflow-x: hidden;
-}
-
-.content {
-  padding: 20px;
-}
-
-h1,h2,h3 {
-  text-align: center;
-}
-
-.msg {
-  margin-top: 10px;
-  text-align: center;
-}
-
-/* ====== FOOTER ====== */
-.footer {
-  color: #bfbfbf;
-  text-align: center;
-  padding: 15px;
-  margin-top: 40px;
-  font-size: 0.9rem;
-  position: fixed;
-  bottom: 0;
-  width: 100%;
-  background: #081225;
-}
-
-/* ====== LOGIN ====== */
-.login-body {
+  background: #0C1A33;
+  color: white;
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  padding-top: 60px;
 }
+
+/* Footer fijo abajo */
+footer.footer {
+  margin-top: auto;
+  text-align: center;
+  padding: 12px;
+  font-size: 12px;
+  opacity: 0.7;
+}
+
+/* ========= LOGIN ========= */
+.login-body { display: flex; justify-content: center; }
 
 .login-container {
-  width: 350px;
-  margin: auto;
+  width: 90%;
+  max-width: 350px;
+  margin-top: 50px;
   background: rgba(255,255,255,0.05);
   padding: 30px;
-  border-radius: 16px;
-  box-shadow: 0 0 12px rgba(255,255,255,0.1);
+  border-radius: 15px;
+  backdrop-filter: blur(8px);
 }
 
-.login-container input,
-.login-container select {
+.login-logo {
+  width: 120px;
+  display: block;
+  margin: 0 auto 20px;
+}
+
+input, select {
   width: 100%;
   padding: 12px;
-  margin: 8px 0 15px;
-  border-radius: 10px;
+  margin: 8px 0 16px;
+  border-radius: 8px;
   border: none;
-  font-size: 1.1rem;
-  background: rgba(255,255,255,0.15);
-  color: white;
+  outline: none;
 }
 
-/* ====== BOTÓN METÁLICO ====== */
+.login-msg { color: #ff8080; margin-top: 10px; }
+
+/* ========= HOME ========= */
+.home-container {
+  text-align: center;
+  margin-top: 40px;
+}
+
+.home-logo {
+  width: 140px;
+  margin-bottom: 20px;
+}
+
+.home-menu {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  padding-bottom: 40px;
+}
+
+/* ========= BOTONES METÁLICOS ========= */
 .btn-metal {
-  background: linear-gradient(135deg, #d4d4d4, #ffffff, #c2c2c2);
-  border: 1px solid #999;
-  padding: 12px;
-  width: 100%;
-  border-radius: 10px;
-  font-size: 1.2rem;
-  font-weight: 600;
-  background-size: 300%;
-  animation: metalShine 4s infinite linear;
-  cursor: pointer;
-}
-
-@keyframes metalShine {
-  0% { background-position: 0% }
-  100% { background-position: 300% }
-}
-
-/* ====== BOTÓN CAJA FUERTE ====== */
-.btn-safe {
-  background: linear-gradient(135deg, #18e1d2, #0fb5a8, #1ef5e9);
+  background: linear-gradient(145deg, #1e1e1e, #2f2f2f);
   color: white;
   padding: 14px;
+  text-align: center;
   border-radius: 12px;
-  border: none;
-  font-size: 1.2rem;
-  font-weight: bold;
-  background-size: 300%;
-  animation: btnSafeAnim 5s infinite linear;
+  font-size: 18px;
+  text-decoration: none;
+  display: block;
+  position: relative;
+  overflow: hidden;
+  animation: metallicPulse 4s infinite;
 }
 
-@keyframes btnSafeAnim {
-  0% { background-position: 0%; }
-  100% { background-position: 300%; }
+#btnCaja {
+  background: linear-gradient(145deg, #0099cc, #00bbf0);
 }
 
-/* ====== MODAL ====== */
-.modal {
+.btn-metal::after {
+  content:"";
+  position:absolute;
+  top:0;
+  left:-100%;
+  width:50%;
+  height:100%;
+  background: rgba(255,255,255,0.4);
+  transform: skewX(-25deg);
+  animation: shine 3s infinite;
+}
+
+@keyframes shine {
+  0% { left:-100%; }
+  50% { left:120%; }
+  100% { left:120%; }
+}
+
+@keyframes metallicPulse {
+  0% { box-shadow: 0 0 8px rgba(255,255,255,0.2); }
+  50% { box-shadow: 0 0 14px rgba(255,255,255,0.4); }
+  100% { box-shadow: 0 0 8px rgba(255,255,255,0.2); }
+}
+
+.btn-logout { background:#aa0000 !important; }
+
+/* ========= OPERACIONES MODAL ========= */
+.modal-bg {
   position: fixed;
   inset: 0;
-  background: rgba(0,0,0,0.7);
+  background: rgba(0,0,0,0.6);
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.modal.hidden { display: none; }
-
-.modal-content {
-  width: 90%;
-  max-width: 380px;
-  background: #112244;
+.modal-box {
+  background: #162544;
   padding: 25px;
-  border-radius: 14px;
-  box-shadow: 0 0 20px rgba(255,255,255,0.15);
+  border-radius: 12px;
+  width: 90%;
+  max-width: 400px;
 }
 
-.modal-content input,
-.modal-content select {
-  width: 100%;
-  padding: 12px;
-  margin: 8px 0 15px;
-  border-radius: 10px;
-  border: none;
-  background: rgba(255,255,255,0.15);
-  color: white;
-}
-
-.btn-close {
-  background: #ff4c4c;
-  border: none;
-  padding: 10px;
-  width: 100%;
-  border-radius: 8px;
-  margin-top: 5px;
-  color: white;
-  font-weight: bold;
-}
-
-/* ====== OPERACIONES LIST ====== */
-.op-item {
-  background: rgba(255,255,255,0.08);
-  padding: 12px;
-  margin-bottom: 10px;
-  border-radius: 10px;
-}
-
-.op-meta {
-  font-size: 0.9rem;
-  opacity: 0.7;
+.modal-box h2 {
+  margin-top: 0;
+  text-align: center;
 }
 
 
