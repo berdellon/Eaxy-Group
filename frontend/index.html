@@ -1,39 +1,54 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <title>EAXY - Login</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Eaxy Group — Acceso</title>
+
   <link rel="stylesheet" href="static/css/style.css">
 </head>
-
 <body class="login-body">
+  <div class="center-wrap">
+    <div class="login-card">
+      <div class="logo-wrap">
+        <img src="static/icons/eaxy_logo_green.svg" alt="Eaxy Group" class="login-logo">
+      </div>
 
-  <div class="login-container">
-    <img src="static/icons/eaxy_logo_green.svg" class="login-logo" alt="EAXY">
+      <h1 class="title">Bienvenido a <span class="brand-word">Eaxy Group</span></h1>
+      <p class="subtitle">Accede con tu usuario y PIN</p>
 
-    <label for="username">Usuario</label>
-    <input id="username" type="text" placeholder="Usuario">
+      <div class="form">
+        <input id="username" placeholder="Usuario" class="input" autocomplete="username"/>
+        <input id="password" placeholder="PIN" class="input" type="password" inputmode="numeric" pattern="[0-9]*" autocomplete="one-time-code"/>
 
-    <label for="password">PIN</label>
-    <input id="password" type="password" placeholder="••••">
+        <div style="display:flex;gap:8px;align-items:center;">
+          <button id="openTiendaModal" class="btn-ghost small">Delegación</button>
+          <div id="selectedTienda" style="color:#bfe; font-weight:600;">Barcelona</div>
+        </div>
 
-    <label for="tiendaSelect">Delegación</label>
-    <select id="tiendaSelect">
-      <option value="Barcelona">Barcelona</option>
-      <option value="Madrid">Madrid</option>
-    </select>
+        <button id="loginBtn" class="btn-primary">Entrar</button>
+        <div id="loginMsg" class="msg"></div>
+      </div>
 
-    <button id="loginBtn" class="btn-metal">Entrar</button>
-    <div id="loginMsg" class="login-msg"></div>
+      <div class="login-footer">Designed &amp; Developed by <strong>Daniel Berdellón</strong></div>
+    </div>
   </div>
 
-  <footer class="footer">
-    Designed & Developed by EAXY © 2025
-  </footer>
+  <!-- Modal selector de tienda -->
+  <div id="tiendaModal" class="modal hidden">
+    <div class="modal-content small">
+      <h3>Selecciona Delegación</h3>
+      <div style="display:flex;flex-direction:column;gap:8px;margin-top:8px">
+        <label><input type="radio" name="tienda" value="Barcelona" checked> Barcelona</label>
+        <label><input type="radio" name="tienda" value="Madrid"> Madrid</label>
+      </div>
+      <div style="margin-top:12px;display:flex;gap:8px">
+        <button id="tiendaSave" class="btn-metal">Guardar</button>
+        <button id="tiendaCancel" class="btn-ghost">Cancelar</button>
+      </div>
+    </div>
+  </div>
 
-  <script src="static/js/app.js"></script>
+<script src="static/js/app.js" defer></script>
 </body>
 </html>
-
-
