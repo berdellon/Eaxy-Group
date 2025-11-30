@@ -14,11 +14,9 @@ if DATABASE_URL.startswith("postgres://"):
     DATABASE_URL = DATABASE_URL.replace("postgres://", "postgresql://")
 
 print("DB usada:", DATABASE_URL)
+
 engine = create_engine(DATABASE_URL, echo=False, pool_pre_ping=True)
 
-# -------------------------------------------------------------------------------------
-# DB INIT
-# -------------------------------------------------------------------------------------
 
 def create_tables():
     with engine.connect() as conn:
@@ -58,6 +56,8 @@ def insert_initial_users():
             """))
             conn.commit()
 
+
+# Esperar DB Render
 ready = False
 for i in range(10):
     try:
@@ -69,124 +69,86 @@ for i in range(10):
         print("DB no lista, reintentando…")
         time.sleep(2)
 
-if ready:
+if not ready:
+    print("ERROR: No se pudo conectar a la DB.")
+else:
     create_tables()
     insert_initial_users()
     print("BD lista ✔")
-else:
-    print("ERROR: No se pudo conectar a la DB.")
 
 
-# -------------------------------------------------------------------------------------
-# HELPERS
-# -------------------------------------------------------------------------------------
+@app.get("/api/health")
+def health():
+    return jsonify({"ok": True})
 
-def auth_required(f):
-    def wrapper(*args, **kwargs):
-        token = None
-        if "Authorization" in request.headers:
-            token = request.headers["Authorization"].replace("Bearer ", "")
-
-        if not token:
-            return jsonify({"error": "Missing token"}), 401
-
-        try:
-            data = jwt.decode(token, SECRET_KEY, algorithms=["HS256"])
-            request.user = data
-        except:
-            return jsonify({"error": "Invalid token"}), 401
-
-        return f(*args, **kwargs)
-    wrapper.__name__ = f.__name__
-    return wrapper
-
-
-# -------------------------------------------------------------------------------------
-# LOGIN
-# -------------------------------------------------------------------------------------
 
 @app.post("/api/login")
 def login():
-    data = request.json
-    u = data.get("username")
-    p = data.get("pin")
+    data = request.json or {}
+    u = (data.get("username") or "").strip()
+    p = (data.get("pin") or "").strip()
 
+    # Comparación robusta (insensible a mayúsculas en usuario)
     query = """
         SELECT id, role, tienda
         FROM users
-        WHERE username = :u AND pin = :p
+        WHERE LOWER(username) = LOWER(:u) AND pin = :p
+        LIMIT 1
     """
 
     with engine.connect() as conn:
-        result = conn.execute(text(query), {"u": u, "p": p}).fetchone()
+        row = conn.execute(text(query), {"u": u, "p": p}).fetchone()
 
-    if not result:
+    if not row:
         return jsonify({"ok": False, "msg": "Credenciales incorrectas"}), 401
 
     token = jwt.encode({
-        "id": result.id,
-        "role": result.role,
-        "tienda": result.tienda,
+        "id": row.id,
+        "role": row.role,
+        "tienda": row.tienda,
         "exp": datetime.datetime.utcnow() + datetime.timedelta(hours=12)
     }, SECRET_KEY, algorithm="HS256")
 
-    return jsonify({
-        "ok": True,
-        "token": token,
-        "tienda": result.tienda,
-        "role": result.role
-    })
+    return jsonify({"ok": True, "token": token, "role": row.role, "tienda": row.tienda})
 
-
-# -------------------------------------------------------------------------------------
-# CREAR OPERACIÓN
-# -------------------------------------------------------------------------------------
 
 @app.post("/api/operaciones")
-@auth_required
 def crear_operacion():
-    data = request.json
+    auth = request.headers.get("Authorization","").replace("Bearer ","")
+    try:
+        user = jwt.decode(auth, SECRET_KEY, algorithms=["HS256"])
+    except:
+        return jsonify({"error":"No autorizado"}),401
 
+    data = request.json or {}
     tipo = data.get("tipo")
-    cliente = data.get("cliente", "")
+    cliente = data.get("cliente","")
     importe = data.get("importe")
-    moneda = data.get("moneda", "EUR")
+    moneda = data.get("moneda","EUR")
+    tienda = user.get("tienda","Barcelona")
 
     if not tipo or importe is None:
-        return jsonify({"error": "Datos incompletos"}), 400
+        return jsonify({"error":"Datos incompletos"}),400
 
-    tienda = request.user["tienda"]
+    with engine.connect() as conn:
+        conn.execute(text("""
+            INSERT INTO operaciones (tipo, cliente, importe, moneda, tienda)
+            VALUES (:t,:c,:i,:m,:ti)
+        """), {"t": tipo, "c": cliente, "i": importe, "m": moneda, "ti": tienda})
+        conn.commit()
 
-    try:
-        with engine.begin() as conn:   # <-- begin() fuerza commit automático
-            conn.execute(text("""
-                INSERT INTO operaciones (tipo, cliente, importe, moneda, tienda)
-                VALUES (:t, :c, :i, :m, :ti)
-            """), {
-                "t": tipo,
-                "c": cliente,
-                "i": importe,
-                "m": moneda,
-                "ti": tienda
-            })
+    return jsonify({"ok": True})
 
-        return jsonify({"ok": True})
-
-    except Exception as e:
-        print("ERROR INSERT:", str(e))
-        return jsonify({"ok": False, "error": str(e)}), 500
-
-
-
-# -------------------------------------------------------------------------------------
-# HISTORIAL
-# -------------------------------------------------------------------------------------
 
 @app.get("/api/historial")
-@auth_required
 def historial():
-    tienda = request.user["tienda"]
+    auth = request.headers.get("Authorization","").replace("Bearer ","")
+    try:
+        user = jwt.decode(auth, SECRET_KEY, algorithms=["HS256"])
+    except:
+        return jsonify({"error":"No autorizado"}),401
 
+    tienda = user.get("tienda","Barcelona")
     with engine.connect() as conn:
         rows = conn.execute(text("""
             SELECT id, tipo, cliente, importe, moneda, tienda, fecha
@@ -195,21 +157,24 @@ def historial():
             ORDER BY fecha DESC
         """), {"t": tienda}).mappings().all()
 
-    operaciones = [dict(row) for row in rows]   # ← FIX JSON
+    # convertir RowMappings a dicts serializables
+    ops = [dict(r) for r in rows]
+    # formatear fechas a string ISO si vienen como datetime
+    for o in ops:
+        if isinstance(o.get("fecha"), (datetime.datetime,)):
+            o["fecha"] = o["fecha"].isoformat()
+    return jsonify({"operaciones": ops})
 
-    return jsonify({"operaciones": operaciones})
-
-
-
-# -------------------------------------------------------------------------------------
-# CAJA FUERTE
-# -------------------------------------------------------------------------------------
 
 @app.get("/api/caja")
-@auth_required
 def caja():
-    tienda = request.user["tienda"]
+    auth = request.headers.get("Authorization","").replace("Bearer ","")
+    try:
+        user = jwt.decode(auth, SECRET_KEY, algorithms=["HS256"])
+    except:
+        return jsonify({"error":"No autorizado"}),401
 
+    tienda = user.get("tienda","Barcelona")
     with engine.connect() as conn:
         rows = conn.execute(text("""
             SELECT tipo, importe
@@ -217,72 +182,56 @@ def caja():
             WHERE tienda = :t
         """), {"t": tienda}).fetchall()
 
-    total = 0
+    total = 0.0
     for op in rows:
-        if op.tipo in ("cash", "entrada"):
-            total += float(op.importe)
-        if op.tipo in ("salida",):
-            total -= float(op.importe)
+        t = op[0]
+        imp = float(op[1] or 0)
+        if t in ("cash","entrada"):
+            total += imp
+        elif t in ("salida",):
+            total -= imp
+    return jsonify({"total": round(total,2)})
 
-    return jsonify({"total": round(total, 2)})
-
-
-# -------------------------------------------------------------------------------------
-# DAILY
-# -------------------------------------------------------------------------------------
 
 @app.get("/api/daily")
-@auth_required
 def daily():
-    tienda = request.user["tienda"]
-    fecha = request.args.get("fecha")
+    auth = request.headers.get("Authorization","").replace("Bearer ","")
+    try:
+        user = jwt.decode(auth, SECRET_KEY, algorithms=["HS256"])
+    except:
+        return jsonify({"error":"No autorizado"}),401
 
+    tienda = user.get("tienda","Barcelona")
+    fecha = request.args.get("fecha")  # formato YYYY-MM-DD
     query = """
-        SELECT id, tipo, importe, moneda, fecha
+        SELECT id, tipo, cliente, importe, moneda, fecha
         FROM operaciones
-        WHERE tienda = :t AND DATE(fecha) = COALESCE(:f, CURRENT_DATE)
-        ORDER BY fecha DESC
-    """
+        WHERE tienda = :t
+        """ + (" AND DATE(fecha) = :f" if fecha else "") + " ORDER BY fecha DESC"
 
     with engine.connect() as conn:
-        rows = conn.execute(text(query), {"t": tienda, "f": fecha}).mappings().all()
+        rows = conn.execute(text(query), {"t": tienda, "f": fecha} if fecha else {"t": tienda}).mappings().all()
 
-    daily = [dict(row) for row in rows]   # ← FIX JSON
+    ops = [dict(r) for r in rows]
+    for o in ops:
+        if isinstance(o.get("fecha"), (datetime.datetime,)):
+            o["fecha"] = o["fecha"].isoformat()
+    return jsonify({"daily": ops})
 
-    return jsonify({"daily": daily})
-
-
-
-# -------------------------------------------------------------------------------------
-# BACKUP EXPORT
-# -------------------------------------------------------------------------------------
 
 @app.get("/api/backup")
-@auth_required
 def backup():
-    tienda = request.user["tienda"]
+    auth = request.headers.get("Authorization","").replace("Bearer ","")
+    try:
+        user = jwt.decode(auth, SECRET_KEY, algorithms=["HS256"])
+    except:
+        return jsonify({"error":"No autorizado"}),401
 
+    tienda = user.get("tienda","Barcelona")
     with engine.connect() as conn:
-        rows = conn.execute(text("""
-            SELECT *
-            FROM operaciones
-            WHERE tienda = :t
-        """), {"t": tienda}).mappings().all()
+        rows = conn.execute(text("SELECT * FROM operaciones WHERE tienda = :t"), {"t": tienda}).mappings().all()
+    return jsonify({"tienda": tienda, "backup": [dict(r) for r in rows]})
 
-    return jsonify({"tienda": tienda, "backup": list(rows)})
-
-
-# -------------------------------------------------------------------------------------
-
-@app.get("/api/health")
-def health():
-    return jsonify({"ok": True})
-
-
-# -------------------------------------------------------------------------------------
-# START
-# -------------------------------------------------------------------------------------
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000)
-
