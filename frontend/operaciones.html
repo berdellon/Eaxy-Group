@@ -1,63 +1,52 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <title>EAXY - Operaciones</title>
+  <meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Operaciones — Eaxy</title>
   <link rel="stylesheet" href="static/css/style.css">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
-
 <body>
+  <main class="container">
+    <header class="small-header">
+      <a href="home.html" class="back">← Volver</a>
+      <h1 class="corporate-text">Operaciones</h1>
+    </header>
 
-<header class="header">
-  <h2>Operaciones</h2>
-  <button onclick="window.location.href='home.html'" class="btn-small">⟵ Volver</button>
-</header>
+    <section class="card">
+      <div style="display:flex;justify-content:flex-end">
+        <button id="btnNuevaOp" class="btn-metal">+ Crear operación</button>
+      </div>
 
-<div class="content">
-  <button id="openModalOp" class="btn-metal">+ Nueva Operación</button>
+      <div style="margin-top:16px" id="opsList">Cargando...</div>
+    </section>
 
-  <div id="opsList" class="ops-list">
-    Cargando operaciones...
+    <div class="login-footer">Designed &amp; Developed by <strong>Daniel Berdellón</strong></div>
+  </main>
+
+  <!-- MODAL (nuevo) -->
+  <div id="modalOp" class="modal hidden">
+    <div class="modal-content">
+      <h2>Nueva operación</h2>
+      <label>Tipo</label>
+      <select id="opTipo">
+        <option value="cash">Cash</option>
+        <option value="cripto">Cripto</option>
+        <option value="entrada">Entrada</option>
+        <option value="salida">Salida</option>
+      </select>
+      <label>Cliente</label>
+      <input id="opCliente" type="text" placeholder="Opcional">
+      <label>Importe</label>
+      <input id="opImporte" type="number" step="0.01">
+      <label>Moneda</label>
+      <input id="opMoneda" value="EUR">
+      <div style="margin-top:12px;display:flex;gap:8px">
+        <button id="opSave" class="btn-primary">Guardar</button>
+        <button id="opCancel" class="btn-ghost">Cancelar</button>
+      </div>
+    </div>
   </div>
-</div>
 
-<!-- MODAL -->
-<div id="opModal" class="modal hidden">
-  <div class="modal-content">
-    <h2>Nueva operación</h2>
-
-    <label>Tipo</label>
-    <select id="m_tipo">
-      <option value="compra">Compra</option>
-      <option value="venta">Venta</option>
-      <option value="envio">Envío</option>
-      <option value="deposito">Depósito</option>
-    </select>
-
-    <label>Cliente</label>
-    <input id="m_cliente" type="text">
-
-    <label>Importe</label>
-    <input id="m_importe" type="number">
-
-    <label>Moneda</label>
-    <select id="m_moneda">
-      <option value="EUR">EUR</option>
-      <option value="USD">USD</option>
-      <option value="GBP">GBP</option>
-    </select>
-
-    <button id="m_save" class="btn-metal">Crear operación</button>
-    <button id="m_close" class="btn-close">Cerrar</button>
-  </div>
-</div>
-
-<footer class="footer">
-  Designed & developed by EAXY © 2025
-</footer>
-
-<script src="static/js/app.js"></script>
+<script src="static/js/app.js" defer></script>
 </body>
 </html>
-
