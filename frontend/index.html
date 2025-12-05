@@ -1,144 +1,126 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>EAXY Login</title>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Eaxy Group — Acceso</title>
+
+  <link rel="stylesheet" href="static/css/style.css">
 
   <style>
-    /* FONDO AZUL ELÉCTRICO DEGRADADO (VERSIÓN A RESTAURADA) */
-    body {
-      margin: 0;
-      height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      font-family: "Segoe UI", sans-serif;
-      background: linear-gradient(160deg, #011A38 0%, #032859 50%, #043B74 100%);
-      color: white;
-      overflow: hidden;
+    /* Si quieres puedes mover esto a style.css; está aquí para que se vea rápido */
+    :root{
+      --verde1:#00c853; --verde2:#009b3a;
+      --azul1:#011A38; --azul2:#043B74;
+      --card-bg: rgba(255,255,255,0.08);
+      --input-bg: rgba(255,255,255,0.12);
+      --radius: 12px;
     }
 
-    /* TARJETA RESPONSIVE GLASS */
-    .login-card {
-      background: rgba(255,255,255,0.08);
-      backdrop-filter: blur(12px);
-      border-radius: 18px;
-      padding: 28px 24px;
-      width: 90%;
-      max-width: 360px;
-      box-shadow: 0 8px 18px rgba(0,0,0,0.30);
-      text-align: center;
+    body{
+      margin:0;
+      min-height:100vh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-family:"Poppins", "Segoe UI", sans-serif;
+      background: linear-gradient(160deg, var(--azul1) 0%, #032859 50%, var(--azul2) 100%);
+      color:#fff;
+      -webkit-font-smoothing:antialiased;
+      overflow-x:hidden;
     }
 
-    /* LOGO */
-    .logo {
-      width: 90px;
-      margin-bottom: 10px;
+    .login-card{
+      width:92%;
+      max-width:380px;
+      background:var(--card-bg);
+      padding:28px;
+      border-radius:18px;
+      box-shadow:0 10px 30px rgba(0,0,0,0.35);
+      text-align:center;
+      backdrop-filter: blur(8px);
     }
 
-    h2 {
-      margin: 0 0 22px 0;
-      color: #cfe9ff;
-      font-weight: 500;
-      font-size: 1.4rem;
+    .login-logo{ width:88px; display:block; margin: 0 auto 12px; }
+
+    .brand-title{
+      font-size:20px;
+      margin:6px 0 14px;
+      color:#CFE9FF;
+      font-weight:700;
     }
 
-    /* INPUTS */
-    input, select {
-      width: 100%;
-      padding: 12px;
-      margin-bottom: 12px;
-      border-radius: 8px;
-      border: none;
+    /* Inputs y select iguales en tamaño/apariencia */
+    .field {
+      width:100%;
+      padding:12px 14px;
+      margin-bottom:12px;
+      border-radius:10px;
+      border:none;
+      background: var(--input-bg);
+      color: #fff;
+      font-size:15px;
       outline: none;
-      font-size: 1rem;
-      background: rgba(255,255,255,0.12);
-      color: white;
-      backdrop-filter: blur(5px);
+      box-sizing: border-box;
     }
 
-    input::placeholder {
-      color: #d2e6ff;
-    }
+    /* Forzar que select tenga look similar a input */
+    select.field { appearance: none; -webkit-appearance: none; -moz-appearance: none; background-image: url('data:image/svg+xml;utf8,<svg fill="white" height="12" viewBox="0 0 24 24" width="12" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>'); background-repeat:no-repeat; background-position: right 12px center; background-size: 12px; padding-right:36px; }
 
-    /* BOTONES PEQUEÑOS Y PROPORCIONALES */
     .btn {
-      width: 100%;
-      padding: 12px;
-      font-size: 1rem;
-      border-radius: 10px;
-      border: none;
-      cursor: pointer;
-      margin-top: 6px;
-      background: linear-gradient(135deg, #00c853, #009b3a);
-      color: white;
-      font-weight: bold;
-      transition: 0.25s;
-      box-shadow: 0 4px 12px rgba(0, 200, 83, 0.35);
+      width:100%;
+      padding:12px;
+      border-radius:10px;
+      border:none;
+      font-weight:700;
+      font-size:15px;
+      cursor:pointer;
+      background: linear-gradient(135deg,var(--verde1),var(--verde2));
+      color:#fff;
+      box-shadow: 0 8px 26px rgba(0,200,83,0.18);
+      transition: transform .12s ease, box-shadow .12s ease;
+    }
+    .btn:active{ transform: scale(.995); }
+    .btn.secondary{
+      background: transparent;
+      border: 1px solid rgba(255,255,255,0.08);
+      box-shadow:none;
+      font-weight:600;
     }
 
-    .btn:hover {
-      transform: scale(1.03);
-      box-shadow: 0 4px 16px rgba(0,255,106,0.5);
-    }
+    #loginMsg{ margin-top:10px; color:#ff9a9a; min-height:20px; font-size:0.95rem; }
 
-    #loginMsg {
-      margin-top: 10px;
-      min-height: 20px;
-      color: #ff8a80;
-      font-size: 0.9rem;
-    }
+    footer{ position:fixed; bottom:10px; left:0; right:0; text-align:center; color:#A7C2D9; font-size:13px; }
 
-    footer {
-      position: fixed;
-      bottom: 10px;
-      width: 100%;
-      text-align: center;
-      font-size: 0.85rem;
-      color: #A7C2D9;
-    }
-
-    /* RESPONSIVE */
-    @media (max-width: 480px) {
-      .login-card {
-        padding: 24px 20px;
-        max-width: 330px;
-      }
-      .logo {
-        width: 75px;
-      }
+    /* Responsive tweaks */
+    @media (max-width:420px){
+      .login-card{ padding:20px; }
+      .login-logo{ width:72px; }
     }
   </style>
 </head>
-
 <body>
+  <div class="login-card" role="main" aria-labelledby="loginTitle">
+    <img src="static/icons/eaxy_logo_green.svg" alt="Eaxy Group" class="login-logo" id="logo">
 
-  <div class="login-card">
-    <!-- LOGO (usa el tuyo) -->
-    <img src="static/icons/eaxy_logo_green.svg" class="logo">
+    <div id="loginTitle" class="brand-title">Bienvenido a Eaxy Group</div>
 
-    <h2>Bienvenido a EAXY</h2>
-
-    <!-- Selector de tienda -->
-    <select id="tiendaSelect">
-      <option value="" disabled selected>Selecciona sede</option>
+    <!-- Selector de tienda estilizado como input para tener mismo tamaño -->
+    <select id="tiendaSelect" class="field" aria-label="Selector de delegación">
       <option value="Barcelona">Barcelona</option>
       <option value="Madrid">Madrid</option>
     </select>
 
-    <input id="username" type="text" placeholder="Usuario">
+    <input id="username" class="field" type="text" placeholder="Usuario" autocomplete="username" inputmode="text" />
+    <input id="password" class="field" type="password" placeholder="PIN" autocomplete="current-password" inputmode="numeric" pattern="[0-9]*" />
 
-    <!-- PIN oculto -->
-    <input id="password" type="password" placeholder="PIN">
+    <button id="loginBtn" class="btn" type="button">Entrar</button>
 
-    <button id="loginBtn" class="btn">Entrar</button>
-
-    <div id="loginMsg"></div>
+    <div id="loginMsg" role="status" aria-live="polite"></div>
   </div>
 
-  <footer>Designed & Developed by EAXY</footer>
+  <footer>Designed &amp; Developed by <strong>Daniel Berdellón</strong></footer>
 
-  <script src="static/js/app.js"></script>
+  <script src="static/js/app.js" defer></script>
 </body>
 </html>
