@@ -1,145 +1,129 @@
+// frontend/static/js/app.js
 const API = window.FRONTEND_API_URL || (location.origin + '/api');
 
-function qs(s){ return document.querySelector(s); }
-function qsa(s){ return Array.from(document.querySelectorAll(s)); }
+function qs(sel){ return document.querySelector(sel); }
+function qsa(sel){ return Array.from(document.querySelectorAll(sel)); }
 
 function saveUser(token, username, tienda){
-  localStorage.setItem('eaxy_user', JSON.stringify({ token, username, tienda }));
+  const obj = { token, username, tienda };
+  localStorage.setItem('eaxy_user', JSON.stringify(obj));
+  // también guardamos token por separado por compatibilidad
+  localStorage.setItem('token', token);
 }
-function getToken(){
-  try { return JSON.parse(localStorage.getItem('eaxy_user'))?.token; } catch(e){ return null; }
-}
-function getTiendaLocal(){ try{ return JSON.parse(localStorage.getItem('eaxy_user'))?.tienda || 'Barcelona' }catch(e){ return 'Barcelona' } }
 
-async function fetchJSON(url, opts={}){
+function getStoredUser(){
+  try{ return JSON.parse(localStorage.getItem('eaxy_user') || 'null'); }catch(e){ return null; }
+}
+
+function getToken(){
+  const u = getStoredUser();
+  if(u && u.token) return u.token;
+  return localStorage.getItem('token');
+}
+
+async function fetchJSON(url, opts = {}){
   opts.headers = opts.headers || {};
   const t = getToken();
   if(t) opts.headers['Authorization'] = 'Bearer ' + t;
+
   try{
-    const r = await fetch(url, opts);
-    const txt = await r.text();
-    try{ return { ok: r.ok, status: r.status, data: txt ? JSON.parse(txt) : null, text: txt }; }
-    catch(e){ return { ok: r.ok, status: r.status, data: null, text: txt }; }
-  }catch(e){
-    return { ok:false, error: e.message || String(e) };
+    const res = await fetch(url, opts);
+    const txt = await res.text();
+    let data = null;
+    try{ data = txt ? JSON.parse(txt) : null; } catch(e) { data = null; }
+    return { ok: res.ok, status: res.status, data, text: txt };
+  }catch(err){
+    return { ok:false, error: err.message || String(err) };
   }
 }
 
-/* DOM ready */
 document.addEventListener('DOMContentLoaded', ()=>{
 
-  // Inicializa selector tienda mostrado
-  const selDisplay = qs('#selectedTienda');
-  if(selDisplay) selDisplay.textContent = getTiendaLocal();
+  const loginBtn = qs('#loginBtn');
+  const usernameEl = qs('#username');
+  const passwordEl = qs('#password');
+  const tiendaEl = qs('#tiendaSelect');
+  const loginMsg = qs('#loginMsg');
 
-  // TIENDA modal handlers
-  const openT = qs('#openTiendaModal');
-  const modalT = qs('#tiendaModal');
-  const saveT = qs('#tiendaSave');
-  const cancelT = qs('#tiendaCancel');
+  // Si hay tienda guardada, preseleccionarla
+  const stored = getStoredUser();
+  if(stored && stored.tienda){
+    try{ tiendaEl.value = stored.tienda; }catch(e){}
+  }
 
-  openT?.addEventListener('click', ()=> modalT.classList.remove('hidden'));
-  cancelT?.addEventListener('click', ()=> modalT.classList.add('hidden'));
+  // Manejo del botón Entrar
+  loginBtn?.addEventListener('click', async (ev)=>{
+    ev.preventDefault();
+    loginMsg.textContent = '';
 
-  saveT?.addEventListener('click', ()=>{
-    const radios = qsa('input[name="tienda"]');
-    let selected = 'Barcelona';
-    radios.forEach(r=>{ if(r.checked) selected = r.value; });
-    // actualizar visual y localstorage parcial
-    selDisplay && (selDisplay.textContent = selected);
-    // si ya hay token guardado, mantenemos token y username, actualizamos tienda local
+    const username = (usernameEl.value || '').trim();
+    const pin = (passwordEl.value || '').trim();
+    const tienda = (tiendaEl.value || '').trim() || 'Barcelona';
+
+    if(!username || !pin){
+      loginMsg.textContent = 'Rellena usuario y PIN';
+      return;
+    }
+
+    // Mostrar estado
+    loginMsg.textContent = 'Conectando...';
+
+    // Petición al backend
     try{
-      const obj = JSON.parse(localStorage.getItem('eaxy_user')) || {};
-      obj.tienda = selected;
-      localStorage.setItem('eaxy_user', JSON.stringify(obj));
-    }catch(e){}
-    modalT.classList.add('hidden');
-  });
-
-  /* LOGIN */
-  if(location.pathname.endsWith('index.html') || location.pathname.endsWith('/')){
-    qs('#loginBtn')?.addEventListener('click', async ()=>{
-
-      const u = qs('#username').value.trim();
-      const p = qs('#password').value.trim();
-      const msg = qs('#loginMsg');
-
-      if(!u || !p){ if(msg) msg.textContent = 'Rellena usuario y PIN'; return; }
-
-      msg && (msg.textContent = 'Conectando...');
-
       const res = await fetchJSON(API + '/login', {
-        method:'POST',
-        headers:{ 'Content-Type':'application/json' },
-        body: JSON.stringify({ username: u, pin: p })
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username: username, pin: pin })
       });
 
-      if(!res.ok || !res.data?.token){
-        msg && (msg.textContent = (res.data && res.data.msg) ? res.data.msg : 'Usuario o PIN incorrectos');
+      console.log('Login response raw:', res);
+
+      if(!res.ok){
+        // Si backend devolvió JSON con msg, mostrarlo; si no, mostrar texto plano
+        const msg = (res.data && res.data.msg) ? res.data.msg : (res.text || 'Error de autenticación');
+        loginMsg.textContent = msg;
         return;
       }
 
-      // guardar token + username + tienda seleccionada (si la han elegido)
-      const tienda = qs('#selectedTienda')?.textContent || 'Barcelona';
-      saveUser(res.data.token || res.data.token, u, tienda);
+      // En algunos casos token puede venir en res.data.token o en res.data (si res.data es token)
+      const token = (res.data && res.data.token) ? res.data.token
+                  : (res.data && res.data.ok && res.data.token) ? res.data.token
+                  : (typeof res.data === 'string' ? res.data : null);
 
-      // ir a home
-      window.location.href = 'home.html';
-    });
-  }
-
-  /* LOGOUT */
-  qs('#logoutBtn')?.addEventListener('click', ()=>{
-    localStorage.removeItem('eaxy_user');
-    window.location.href = 'index.html';
-  });
-
-  /* OPERACIONES page handlers (si estamos en operaciones) */
-  if(location.pathname.includes('operaciones.html')){
-    const btnNew = qs('#btnNuevaOp');
-    const modal = qs('#modalOp');
-    const btnCancel = qs('#opCancel');
-    const btnSave = qs('#opSave');
-    const opsList = qs('#opsList');
-
-    btnNew?.addEventListener('click', ()=> modal.classList.remove('hidden'));
-    btnCancel?.addEventListener('click', ()=> modal.classList.add('hidden'));
-
-    async function cargarOps(){
-      const r = await fetchJSON(API + '/historial');
-      if(!r.ok){ opsList.innerHTML = '<small>Sin movimientos</small>'; return; }
-      const arr = (r.data && r.data.operaciones) ? r.data.operaciones : (r.data || []);
-      if(!Array.isArray(arr) || arr.length === 0){ opsList.innerHTML = '<small>Sin movimientos</small>'; return; }
-      opsList.innerHTML = arr.map(o=>`<div class="op-item"><b>${o.tipo}</b> — ${o.importe} ${o.moneda}<div class="op-meta">${o.cliente || ''} • ${o.fecha || ''}</div></div>`).join('');
-    }
-
-    btnSave?.addEventListener('click', async ()=>{
-      const payload = {
-        tipo: qs('#opTipo').value,
-        cliente: qs('#opCliente').value,
-        importe: Number(qs('#opImporte').value),
-        moneda: qs('#opMoneda').value || 'EUR'
-      };
-      if(!payload.tipo || !payload.importe){ alert('Rellena tipo e importe'); return; }
-
-      const r = await fetchJSON(API + '/operaciones', {
-        method:'POST',
-        headers:{ 'Content-Type':'application/json' },
-        body: JSON.stringify(payload)
-      });
-
-      if(r.ok && r.data && r.data.ok){
-        alert('Operación creada correctamente');
-        modal.classList.add('hidden');
-        cargarOps();
-      } else {
-        alert('Error al crear: ' + (r.data?.error || r.text || 'Error'));
+      if(!token && res.data && res.data.ok === true && res.data.tienda){
+        // fallback: si backend devuelve ok:true y tienda/role sin token (raro), no hagas login
+        loginMsg.textContent = 'Respuesta inesperada del servidor (falta token)';
+        return;
       }
-    });
 
-    cargarOps();
-  }
+      if(!token){
+        // try to parse token inside nested object
+        if(res.data && res.data.token) {
+          saveUser(res.data.token, username, tienda);
+        } else {
+          loginMsg.textContent = 'No se recibió token. Revisa el backend.';
+          console.warn('No token in login response:', res);
+          return;
+        }
+      } else {
+        saveUser(token, username, tienda);
+      }
 
-  /* Otras páginas (caja/daily/historial) mantienen handlers previos si existen */
+      // Guardamos la tienda real devuelta por back si viene
+      if(res.data && res.data.tienda){
+        try{
+          const u = JSON.parse(localStorage.getItem('eaxy_user') || '{}');
+          u.tienda = res.data.tienda;
+          localStorage.setItem('eaxy_user', JSON.stringify(u));
+        }catch(e){}
+      }
+
+      // redirigir a home
+      window.location.href = 'home.html';
+    }catch(e){
+      console.error('Login error', e);
+      loginMsg.textContent = 'Error conexión: ' + (e.message || String(e));
+    }
+  });
 
 });
