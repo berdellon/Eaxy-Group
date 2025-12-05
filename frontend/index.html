@@ -3,124 +3,33 @@
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <title>Eaxy Group — Acceso</title>
-
+  <title>Eaxy Group — Login</title>
   <link rel="stylesheet" href="static/css/style.css">
-
-  <style>
-    /* Si quieres puedes mover esto a style.css; está aquí para que se vea rápido */
-    :root{
-      --verde1:#00c853; --verde2:#009b3a;
-      --azul1:#011A38; --azul2:#043B74;
-      --card-bg: rgba(255,255,255,0.08);
-      --input-bg: rgba(255,255,255,0.12);
-      --radius: 12px;
-    }
-
-    body{
-      margin:0;
-      min-height:100vh;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      font-family:"Poppins", "Segoe UI", sans-serif;
-      background: linear-gradient(160deg, var(--azul1) 0%, #032859 50%, var(--azul2) 100%);
-      color:#fff;
-      -webkit-font-smoothing:antialiased;
-      overflow-x:hidden;
-    }
-
-    .login-card{
-      width:92%;
-      max-width:380px;
-      background:var(--card-bg);
-      padding:28px;
-      border-radius:18px;
-      box-shadow:0 10px 30px rgba(0,0,0,0.35);
-      text-align:center;
-      backdrop-filter: blur(8px);
-    }
-
-    .login-logo{ width:88px; display:block; margin: 0 auto 12px; }
-
-    .brand-title{
-      font-size:20px;
-      margin:6px 0 14px;
-      color:#CFE9FF;
-      font-weight:700;
-    }
-
-    /* Inputs y select iguales en tamaño/apariencia */
-    .field {
-      width:100%;
-      padding:12px 14px;
-      margin-bottom:12px;
-      border-radius:10px;
-      border:none;
-      background: var(--input-bg);
-      color: #fff;
-      font-size:15px;
-      outline: none;
-      box-sizing: border-box;
-    }
-
-    /* Forzar que select tenga look similar a input */
-    select.field { appearance: none; -webkit-appearance: none; -moz-appearance: none; background-image: url('data:image/svg+xml;utf8,<svg fill="white" height="12" viewBox="0 0 24 24" width="12" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>'); background-repeat:no-repeat; background-position: right 12px center; background-size: 12px; padding-right:36px; }
-
-    .btn {
-      width:100%;
-      padding:12px;
-      border-radius:10px;
-      border:none;
-      font-weight:700;
-      font-size:15px;
-      cursor:pointer;
-      background: linear-gradient(135deg,var(--verde1),var(--verde2));
-      color:#fff;
-      box-shadow: 0 8px 26px rgba(0,200,83,0.18);
-      transition: transform .12s ease, box-shadow .12s ease;
-    }
-    .btn:active{ transform: scale(.995); }
-    .btn.secondary{
-      background: transparent;
-      border: 1px solid rgba(255,255,255,0.08);
-      box-shadow:none;
-      font-weight:600;
-    }
-
-    #loginMsg{ margin-top:10px; color:#ff9a9a; min-height:20px; font-size:0.95rem; }
-
-    footer{ position:fixed; bottom:10px; left:0; right:0; text-align:center; color:#A7C2D9; font-size:13px; }
-
-    /* Responsive tweaks */
-    @media (max-width:420px){
-      .login-card{ padding:20px; }
-      .login-logo{ width:72px; }
-    }
-  </style>
+  <script src="static/js/app.js" defer></script>
 </head>
 <body>
-  <div class="login-card" role="main" aria-labelledby="loginTitle">
-    <img src="static/icons/eaxy_logo_green.svg" alt="Eaxy Group" class="login-logo" id="logo">
 
-    <div id="loginTitle" class="brand-title">Bienvenido a Eaxy Group</div>
+  <main class="login-container">
+    <h1 class="corporate-text">Eaxy Group</h1>
 
-    <!-- Selector de tienda estilizado como input para tener mismo tamaño -->
-    <select id="tiendaSelect" class="field" aria-label="Selector de delegación">
-      <option value="Barcelona">Barcelona</option>
-      <option value="Madrid">Madrid</option>
-    </select>
+    <div class="card login-card">
 
-    <input id="username" class="field" type="text" placeholder="Usuario" autocomplete="username" inputmode="text" />
-    <input id="password" class="field" type="password" placeholder="PIN" autocomplete="current-password" inputmode="numeric" pattern="[0-9]*" />
+      <label>Usuario</label>
+      <input id="username" class="input" type="text" autocomplete="off"/>
 
-    <button id="loginBtn" class="btn" type="button">Entrar</button>
+      <label>PIN</label>
+      <input id="password" class="input" type="password" maxlength="4" autocomplete="off"/>
 
-    <div id="loginMsg" role="status" aria-live="polite"></div>
-  </div>
+      <button id="loginBtn" class="btn-metal-green">Entrar</button>
 
-  <footer>Designed &amp; Developed by <strong>Daniel Berdellón</strong></footer>
+      <div id="loginMsg" class="login-msg"></div>
 
-  <script src="static/js/app.js" defer></script>
+    </div>
+
+    <div class="login-footer">
+      Designed &amp; Developed by <strong>Daniel Berdellón</strong>
+    </div>
+  </main>
+
 </body>
 </html>
