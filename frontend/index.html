@@ -1,54 +1,128 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="utf-8"/>
-  <meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <title>Eaxy Group — Acceso</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EAXY Login</title>
 
-  <link rel="stylesheet" href="static/css/style.css">
+  <style>
+    /* --- FONDO AZUL ELÉCTRICO DEGRADADO (VERSIÓN A ORIGINAL) --- */
+    body {
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(160deg, #021F46 0%, #032859 50%, #043B74 100%);
+      color: white;
+      overflow: hidden;
+    }
+
+    /* --- TARJETA GLASS COMO LA QUE TE GUSTABA --- */
+    .login-card {
+      background: rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(12px);
+      border-radius: 18px;
+      padding: 35px 28px;
+      width: 88%;
+      max-width: 380px;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.25);
+      text-align: center;
+    }
+
+    .login-card h2 {
+      margin-top: 0;
+      margin-bottom: 25px;
+      font-weight: 600;
+      font-size: 1.5rem;
+      color: #CFE9FF;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 14px;
+      border-radius: 8px;
+      border: none;
+      outline: none;
+      font-size: 1rem;
+      background: rgba(255, 255, 255, 0.15);
+      color: white;
+      backdrop-filter: blur(8px);
+    }
+
+    input::placeholder {
+      color: #CFE9FF;
+    }
+
+    /* --- BOTÓN VERDE CORPORATIVO EAXY (EL MISMO QUE TE GUSTABA) --- */
+    .btn {
+      width: 100%;
+      padding: 14px;
+      font-size: 1.1rem;
+      border-radius: 10px;
+      border: none;
+      cursor: pointer;
+      margin-top: 10px;
+      background: linear-gradient(135deg, #00c853, #009b3a);
+      color: white;
+      font-weight: bold;
+      transition: 0.25s;
+      box-shadow: 0 4px 12px rgba(0, 200, 83, 0.35);
+    }
+
+    .btn:hover {
+      transform: scale(1.03);
+      box-shadow: 0 4px 16px rgba(0, 255, 106, 0.5);
+    }
+
+    /* --- MENSAJE DE ERROR --- */
+    #loginMsg {
+      margin-top: 12px;
+      font-size: 0.95rem;
+      color: #ff8a80;
+      min-height: 20px;
+    }
+
+    /* FOOTER FIJO */
+    footer {
+      position: fixed;
+      bottom: 10px;
+      left: 0;
+      width: 100%;
+      text-align: center;
+      color: #A7C2D9;
+      font-size: 0.85rem;
+      opacity: .8;
+    }
+  </style>
 </head>
-<body class="login-body">
-  <div class="center-wrap">
-    <div class="login-card">
-      <div class="logo-wrap">
-        <img src="static/icons/eaxy_logo_green.svg" alt="Eaxy Group" class="login-logo">
-      </div>
 
-      <h1 class="title">Bienvenido a <span class="brand-word">Eaxy Group</span></h1>
-      <p class="subtitle">Accede con tu usuario y PIN</p>
+<body>
 
-      <div class="form">
-        <input id="username" placeholder="Usuario" class="input" autocomplete="username"/>
-        <input id="password" placeholder="PIN" class="input" type="password" inputmode="numeric" pattern="[0-9]*" autocomplete="one-time-code"/>
+  <div class="login-card">
+    <h2>Bienvenido a EAXY</h2>
 
-        <div style="display:flex;gap:8px;align-items:center;">
-          <button id="openTiendaModal" class="btn-ghost small">Delegación</button>
-          <div id="selectedTienda" style="color:#bfe; font-weight:600;">Barcelona</div>
-        </div>
+    <!-- SELECTOR DE TIENDA — AHORA COMO BOTÓN Y ESTILO UNIFICADO -->
+    <select id="tiendaSelect">
+      <option value="" disabled selected>Selecciona sede</option>
+      <option value="Barcelona">Barcelona</option>
+      <option value="Madrid">Madrid</option>
+    </select>
 
-        <button id="loginBtn" class="btn-primary">Entrar</button>
-        <div id="loginMsg" class="msg"></div>
-      </div>
+    <input id="username" type="text" placeholder="Usuario">
 
-      <div class="login-footer">Designed &amp; Developed by <strong>Daniel Berdellón</strong></div>
-    </div>
+    <!-- PIN COMO CONTRASEÑA (✔ Asteriscos) -->
+    <input id="password" type="password" placeholder="PIN">
+
+    <button id="loginBtn" class="btn">Entrar</button>
+
+    <div id="loginMsg"></div>
   </div>
 
-  <!-- Modal selector de tienda -->
-  <div id="tiendaModal" class="modal hidden">
-    <div class="modal-content small">
-      <h3>Selecciona Delegación</h3>
-      <div style="display:flex;flex-direction:column;gap:8px;margin-top:8px">
-        <label><input type="radio" name="tienda" value="Barcelona" checked> Barcelona</label>
-        <label><input type="radio" name="tienda" value="Madrid"> Madrid</label>
-      </div>
-      <div style="margin-top:12px;display:flex;gap:8px">
-        <button id="tiendaSave" class="btn-metal">Guardar</button>
-        <button id="tiendaCancel" class="btn-ghost">Cancelar</button>
-      </div>
-    </div>
-  </div>
+  <footer>Designed & Developed by EAXY</footer>
 
-<script src="static/js/app.js" defer></script>
+<script src="static/js/app.js"></script>
 </body>
 </html>
