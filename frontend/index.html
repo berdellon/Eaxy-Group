@@ -5,47 +5,46 @@
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
   <title>Eaxy Group — Acceso</title>
 
+  <link rel="manifest" href="manifest.json">
   <link rel="stylesheet" href="static/css/style.css">
+  <link 
+href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" 
+rel="stylesheet">
+
+  <script>
+    window.FRONTEND_API_URL='https://eaxy-backend.onrender.com/api';
+  </script>
 </head>
 <body class="login-body">
   <div class="center-wrap">
-    <div class="login-card">
+    <div class="card login-card">
+
       <div class="logo-wrap">
-        <img src="static/icons/eaxy_logo_green.svg" alt="Eaxy Group" class="login-logo">
+        <img src="static/icons/eaxy_logo_placeholder.svg" alt="Eaxy Group" 
+class="login-logo">
       </div>
 
-      <h1 class="title">Bienvenido a <span class="brand-word">Eaxy Group</span></h1>
+      <h1 class="title">
+        Bienvenido a <span class="brand-word">Eaxy Group</span>
+      </h1>
+
       <p class="subtitle">Accede con tu usuario y PIN</p>
 
       <div class="form">
-        <input id="username" placeholder="Usuario" class="input" autocomplete="username"/>
-        <input id="password" placeholder="PIN" class="input" type="password" inputmode="numeric" pattern="[0-9]*" autocomplete="one-time-code"/>
+        <input id="username" placeholder="Usuario" class="input"/>
+        <input id="password" placeholder="PIN" class="input" 
+type="password" inputmode="numeric"/>
 
-        <div style="display:flex;gap:8px;align-items:center;">
-          <button id="openTiendaModal" class="btn-ghost small">Delegación</button>
-          <div id="selectedTienda" style="color:#bfe; font-weight:600;">Barcelona</div>
-        </div>
-
-        <button id="loginBtn" class="btn-primary">Entrar</button>
+        <button id="loginBtn" class="btn-metal 
+btn-primary">Entrar</button>
         <div id="loginMsg" class="msg"></div>
       </div>
 
-      <div class="login-footer">Designed &amp; Developed by <strong>Daniel Berdellón</strong></div>
-    </div>
-  </div>
+      <footer class="footer-login">
+        <small>Designed & Developed by <strong>Daniel 
+Berdellón</strong></small>
+      </footer>
 
-  <!-- Modal selector de tienda -->
-  <div id="tiendaModal" class="modal hidden">
-    <div class="modal-content small">
-      <h3>Selecciona Delegación</h3>
-      <div style="display:flex;flex-direction:column;gap:8px;margin-top:8px">
-        <label><input type="radio" name="tienda" value="Barcelona" checked> Barcelona</label>
-        <label><input type="radio" name="tienda" value="Madrid"> Madrid</label>
-      </div>
-      <div style="margin-top:12px;display:flex;gap:8px">
-        <button id="tiendaSave" class="btn-metal">Guardar</button>
-        <button id="tiendaCancel" class="btn-ghost">Cancelar</button>
-      </div>
     </div>
   </div>
 
