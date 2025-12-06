@@ -4,49 +4,73 @@
   <meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
   <title>Operaciones — Eaxy</title>
   <link rel="stylesheet" href="static/css/style.css">
+  <script>window.FRONTEND_API_URL = window.FRONTEND_API_URL || 'https://eaxy-backend.onrender.com/api';</script>
+  <script src="static/js/app.js" defer></script>
 </head>
 <body>
+  <header class="small-header"><a href="home.html" class="back">← Panel</a><h1 class="corporate-text">Operaciones</h1></header>
   <main class="container">
-    <header class="small-header">
-      <a href="home.html" class="back">← Volver</a>
-      <h1 class="corporate-text">Operaciones</h1>
-    </header>
+    <section class="card">
+      <label>Oficina:
+        <select id="oficinaSelectorLocal">
+          <option>Barcelona</option><option>Madrid</option>
+        </select>
+      </label>
+    </section>
 
     <section class="card">
-      <div style="display:flex;justify-content:flex-end">
-        <button id="btnNuevaOp" class="btn-metal">+ Crear operación</button>
+      <h2>Crear operación</h2>
+
+      <!-- Botón abre modal -->
+      <div style="display:flex;gap:8px;margin-top:8px">
+        <button id="openCreateOp" class="btn-metal">Crear operación</button>
+        <button type="button" id="btnClearOps" class="btn-ghost">Limpiar filtros</button>
       </div>
 
-      <div style="margin-top:16px" id="opsList">Cargando...</div>
+      <!-- Modal: Crear operación -->
+      <div id="opModal" class="modal" aria-hidden="true">
+        <div class="modal-dialog">
+          <header class="modal-header">
+            <h3>Crear nueva operación</h3>
+            <button class="modal-close" id="closeOpModal">✕</button>
+          </header>
+
+          <form id="opModalForm" class="modal-body">
+            <label>Tipo
+              <select id="modalTipo" class="field">
+                <option value="cash">Cash</option>
+                <option value="cripto">Cripto</option>
+                <option value="entrada">Entrada</option>
+                <option value="salida">Salida</option>
+              </select>
+            </label>
+
+            <label>Cliente <input id="modalCliente" class="field" /></label>
+            <label>Importe <input id="modalImporte" class="field" type="number" step="0.01" /></label>
+            <label>Moneda <input id="modalMoneda" class="field" value="EUR" /></label>
+
+            <!-- Si tipo es 'cash' o 'entrada' preguntar recogida pendiente -->
+            <div id="recogidaRow" style="display:none;margin-top:8px">
+              <label><input type="checkbox" id="recogidaPendiente"/> Recogida pendiente</label>
+            </div>
+
+            <div style="display:flex;gap:8px;margin-top:12px">
+              <button type="submit" class="btn-metal">Guardar</button>
+              <button type="button" id="cancelOp" class="btn-ghost">Cancelar</button>
+            </div>
+
+            <div id="opModalMsg" style="margin-top:8px;color:#ffb3b3"></div>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Operaciones recientes</h2>
+      <div id="opsList">Cargando...</div>
     </section>
 
     <div class="login-footer">Designed &amp; Developed by <strong>Daniel Berdellón</strong></div>
   </main>
-
-  <!-- MODAL (nuevo) -->
-  <div id="modalOp" class="modal hidden">
-    <div class="modal-content">
-      <h2>Nueva operación</h2>
-      <label>Tipo</label>
-      <select id="opTipo">
-        <option value="cash">Cash</option>
-        <option value="cripto">Cripto</option>
-        <option value="entrada">Entrada</option>
-        <option value="salida">Salida</option>
-      </select>
-      <label>Cliente</label>
-      <input id="opCliente" type="text" placeholder="Opcional">
-      <label>Importe</label>
-      <input id="opImporte" type="number" step="0.01">
-      <label>Moneda</label>
-      <input id="opMoneda" value="EUR">
-      <div style="margin-top:12px;display:flex;gap:8px">
-        <button id="opSave" class="btn-primary">Guardar</button>
-        <button id="opCancel" class="btn-ghost">Cancelar</button>
-      </div>
-    </div>
-  </div>
-
-<script src="static/js/app.js" defer></script>
 </body>
 </html>
