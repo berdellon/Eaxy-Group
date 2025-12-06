@@ -15,60 +15,62 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background: linear-gradient(135deg, #001f3f, #004a95);
+  background: linear-gradient(135deg, #001a33, #00427d);
   font-family: Arial, sans-serif;
   color: white;
 }
 
-/* Caja translúcida original */
+/* Caja translúcida */
 .login-box {
   width: 90%;
   max-width: 360px;
-  padding: 25px;
-  background: rgba(255,255,255,0.07);
+  padding: 22px;
+  background: rgba(255,255,255,0.08);
   border-radius: 16px;
   backdrop-filter: blur(10px);
-  box-shadow: 0 0 12px rgba(255,255,255,0.2);
+  box-shadow: 0 0 10px rgba(255,255,255,0.18);
 }
 
 /* Logo */
 .logo {
-  width: 130px;
+  width: 120px;
   display: block;
-  margin: 0 auto 15px auto;
+  margin: 0 auto 12px auto;
 }
 
 /* Título */
 h2 {
   text-align: center;
-  margin-bottom: 20px;
+  margin-bottom: 18px;
   font-weight: 300;
+  font-size: 20px;
 }
 
-/* Inputs */
+/* Inputs – mismo tamaño exacto */
 input, select {
   width: 100%;
-  padding: 16px; /* <-- IGUAL PARA QUE TENGAN MISMO TAMAÑO */
-  margin: 10px 0;
-  border-radius: 8px;
+  padding: 12px;           /* <-- TAMANO UNIFORME */
+  margin: 8px 0;
+  border-radius: 7px;
   border: none;
   outline: none;
-  font-size: 16px;
+  font-size: 16px;         /* <-- UNIFORMADO */
+  box-sizing: border-box;
 }
 
 /* Botón verde corporativo */
 button {
   width: 100%;
-  padding: 16px;
+  padding: 12px;           /* <-- IGUAL QUE INPUTS */
   border: none;
-  border-radius: 10px;
-  background: linear-gradient(135deg, #01d463, #00a84a);
+  border-radius: 9px;
+  background: linear-gradient(135deg, #00c85d, #009a46);
   color: white;
-  font-size: 19px;
+  font-size: 17px;
   font-weight: bold;
-  margin-top: 10px;
   cursor: pointer;
   transition: 0.25s;
+  margin-top: 8px;
 }
 
 button:hover {
@@ -83,7 +85,7 @@ button:hover {
   font-size: 14px;
 }
 
-/* Footer fijo */
+/* Footer */
 .footer {
   position: fixed;
   bottom: 10px;
@@ -99,32 +101,34 @@ button:hover {
 
 <div class="login-box">
 
-  <!-- Logo arriba como antes -->
+  <!-- Logo -->
   <img src="static/icons/eaxy_logo_green.svg" class="logo">
 
-  <!-- Nuevo título -->
-  <h2>Bienvenido a Xigroup</h2>
+  <!-- Título corregido -->
+  <h2>Bienvenido a Eaxy Group</h2>
 
+  <!-- Usuario -->
   <input id="username" type="text" placeholder="Usuario">
 
-  <!-- PIN con teclado numérico REAL -->
+  <!-- PIN con teclado numérico -->
   <input id="pin" type="password" inputmode="numeric" pattern="[0-9]*"
          placeholder="PIN (****)" maxlength="4">
 
-  <!-- Selector de tienda (mismo tamaño que los demás) -->
+  <!-- Selector de tienda (igual tamaño) -->
   <select id="tiendaSelect">
     <option value="Barcelona">Barcelona</option>
     <option value="Madrid">Madrid</option>
   </select>
 
+  <!-- Botón entrar -->
   <button id="loginBtn">Entrar</button>
 
   <div id="msg"></div>
 </div>
 
-<!-- Footer corporativo -->
+<!-- Footer corregido -->
 <div class="footer">
-  Designed & Developed by Daniel Verdellón © 2025
+  Designed & Developed by Daniel Berdellón © 2025
 </div>
 
 <script src="static/js/app.js"></script>
