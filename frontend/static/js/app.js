@@ -1,91 +1,62 @@
-// frontend/static/js/app.js
-const API = window.FRONTEND_API_URL || (location.origin + '/api');
+const API = "https://eaxy-backend.onrender.com/api";
 
-function qs(s){ return document.querySelector(s); }
-function saveUser(token, username, tienda){
-  const obj = { token, username, tienda };
-  localStorage.setItem('eaxy_user', JSON.stringify(obj));
-  localStorage.setItem('token', token);
-}
-function getToken(){ try{ return JSON.parse(localStorage.getItem('eaxy_user')||'null')?.token || localStorage.getItem('token'); }catch(e){ return localStorage.getItem('token'); } }
+function qs(a){ return document.querySelector(a); }
 
-async function fetchJSON(url, opts = {}){
-  opts.headers = opts.headers || {};
-  const t = getToken();
-  if(t) opts.headers['Authorization'] = 'Bearer ' + t;
-  try{
-    const r = await fetch(url, opts);
-    const txt = await r.text();
-    let data = null;
-    try{ data = txt ? JSON.parse(txt) : null; }catch(e){}
-    return { ok: r.ok, status: r.status, data, text: txt };
-  }catch(err){
-    return { ok:false, error: err.message || String(err) };
-  }
+function saveUser(token, tienda){
+  localStorage.setItem("token", token);
+  localStorage.setItem("tienda", tienda);
 }
 
-document.addEventListener('DOMContentLoaded', ()=>{
+function getToken(){
+  return localStorage.getItem("token");
+}
 
-  const loginBtn = qs('#loginBtn');
-  const usernameEl = qs('#username');
-  const passwordEl = qs('#password');
-  const tiendaEl = qs('#tiendaSelect');
-  const msgEl = qs('#loginMsg');
+async function fetchJSON(url, options={}){
+  const token = getToken();
 
-  // Preseleccionar tienda si existiera en localStorage
-  try{
-    const prev = JSON.parse(localStorage.getItem('eaxy_user')||'null');
-    if(prev && prev.tienda) tiendaEl.value = prev.tienda;
-  }catch(e){}
+  options.headers = options.headers || {};
+  options.headers["Content-Type"] = "application/json";
+  if(token) options.headers["Authorization"] = "Bearer " + token;
 
-  loginBtn?.addEventListener('click', async ()=>{
-    msgEl.textContent = '';
-    const username = (usernameEl.value||'').trim();
-    const pin = (passwordEl.value||'').trim();
-    const tienda = (tiendaEl.value||'').trim() || 'Barcelona';
+  const res = await fetch(url, options);
+  const text = await res.text();
+  let data = null;
 
-    if(!username || !pin){ msgEl.textContent = 'Rellena usuario y PIN'; return; }
+  try { data = JSON.parse(text); } catch (_) {}
 
-    msgEl.textContent = 'Conectando...';
+  return { ok: res.ok, data, text };
+}
 
-    // Envío correcto como JSON
-    const res = await fetchJSON(API + '/login', {
-      method: 'POST',
-      headers: {'Content-Type':'application/json'},
-      body: JSON.stringify({ username: username, pin: pin })
+document.addEventListener("DOMContentLoaded", ()=>{
+
+  /* LOGIN */
+  if(qs("#loginBtn")){
+    qs("#loginBtn").addEventListener("click", async ()=>{
+
+      const u = qs("#username").value.trim();
+      const p = qs("#pin").value.trim();
+      const t = qs("#tiendaSelect").value;
+      const msg = qs("#msg");
+
+      if(!u || !p){ msg.textContent = "Rellena usuario y PIN"; return; }
+
+      msg.textContent = "Conectando...";
+
+      const r = await fetchJSON(API + "/login", {
+        method: "POST",
+        body: JSON.stringify({ username: u, pin: p, tienda: t })
+      });
+
+      if(!r.ok || !r.data || !r.data.token){
+        msg.textContent = "Credenciales incorrectas";
+        return;
+      }
+
+      saveUser(r.data.token, r.data.tienda);
+      msg.textContent = "";
+
+      window.location.href = "home.html";
     });
-
-    console.log('POST /api/login ->', res);
-
-    if(!res.ok){
-      // Mostrar el mensaje exacto que venga en JSON si existe
-      const errMsg = (res.data && (res.data.msg || res.data.error)) ? (res.data.msg || res.data.error) : (res.text || 'Error en autenticación');
-      msgEl.textContent = errMsg;
-      return;
-    }
-
-    // OK: se espera token en res.data.token
-    const token = res.data && res.data.token ? res.data.token : null;
-    if(!token){
-      // debug: mostrar el body completo
-      console.warn('No token received in login response:', res);
-      msgEl.textContent = 'No se recibió token. Revisa backend (mira logs).';
-      return;
-    }
-
-    // Guardar y redirigir
-    saveUser(token, username, tienda);
-
-    // Si backend devuelve tienda distinta, lo actualizamos
-    if(res.data.tienda){
-      try{
-        const s = JSON.parse(localStorage.getItem('eaxy_user')||'{}');
-        s.tienda = res.data.tienda;
-        localStorage.setItem('eaxy_user', JSON.stringify(s));
-      }catch(e){}
-    }
-
-    window.location.href = 'home.html';
-  });
+  }
 
 });
