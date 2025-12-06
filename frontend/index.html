@@ -3,33 +3,51 @@
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <title>Eaxy Group — Login</title>
+  <title>Eaxy Group — Acceso</title>
   <link rel="stylesheet" href="static/css/style.css">
-  <script src="static/js/app.js" defer></script>
+  <style>
+    /* Tiny overrides to guarantee layout exacto */
+    body{ margin:0; min-height:100vh; display:flex; align-items:center; justify-content:center;
+      font-family:"Poppins",sans-serif;
+      background: linear-gradient(160deg,#011A38 0%,#032859 50%,#043B74 100%);
+      color:#fff; overflow-x:hidden;}
+    .login-card{ width:92%; max-width:380px; padding:28px; border-radius:16px;
+      background: rgba(255,255,255,0.06); backdrop-filter: blur(8px);
+      box-shadow: 0 10px 28px rgba(0,0,0,0.38); text-align:center;}
+    .login-logo{ width:88px; margin:0 auto 10px; display:block;}
+    .brand-title{ margin:6px 0 18px; color:#cfe9ff; font-weight:700; font-size:1.25rem;}
+    .field{ width:100%; padding:12px; margin-bottom:12px; border-radius:10px; border:none;
+      background: rgba(255,255,255,0.12); color:#fff; font-size:15px; box-sizing:border-box;}
+    select.field{ appearance:none; -webkit-appearance:none; -moz-appearance:none;
+      background-image: url('data:image/svg+xml;utf8,<svg fill="white" height="12" viewBox="0 0 24 24" width="12" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>');
+      background-repeat:no-repeat; background-position: right 12px center; padding-right:36px;}
+    .btn{ width:100%; padding:12px; border-radius:10px; border:none; background: linear-gradient(135deg,#00c853,#009b3a);
+      color:#fff; font-weight:800; cursor:pointer; box-shadow:0 8px 22px rgba(0,200,83,0.14); font-size:15px;}
+    #loginMsg{ margin-top:10px; min-height:20px; color:#ff9a9a; font-size:0.95rem; }
+    footer{ position:fixed; bottom:10px; left:0; right:0; text-align:center; color:#A7C2D9; font-size:13px;}
+    @media(max-width:420px){ .login-card{ padding:20px; } .login-logo{ width:72px; } }
+  </style>
 </head>
 <body>
+  <div class="login-card" role="main" aria-labelledby="loginTitle">
+    <img src="static/icons/eaxy_logo_green.svg" alt="Eaxy" class="login-logo" id="logo">
+    <div id="loginTitle" class="brand-title">Bienvenido a Eaxy Group</div>
 
-  <main class="login-container">
-    <h1 class="corporate-text">Eaxy Group</h1>
+    <!-- MISMO TAMAÑO: select e inputs usan la clase "field" -->
+    <select id="tiendaSelect" class="field" aria-label="Selector de delegación">
+      <option value="Barcelona">Barcelona</option>
+      <option value="Madrid">Madrid</option>
+    </select>
 
-    <div class="card login-card">
+    <input id="username" class="field" type="text" placeholder="Usuario" autocomplete="username" />
+    <input id="password" class="field" type="password" placeholder="PIN" autocomplete="current-password" inputmode="numeric" pattern="[0-9]*" />
 
-      <label>Usuario</label>
-      <input id="username" class="input" type="text" autocomplete="off"/>
+    <button id="loginBtn" class="btn" type="button">Entrar</button>
+    <div id="loginMsg" role="status" aria-live="polite"></div>
+  </div>
 
-      <label>PIN</label>
-      <input id="password" class="input" type="password" maxlength="4" autocomplete="off"/>
+  <footer>Designed &amp; Developed by <strong>Daniel Berdellón</strong></footer>
 
-      <button id="loginBtn" class="btn-metal-green">Entrar</button>
-
-      <div id="loginMsg" class="login-msg"></div>
-
-    </div>
-
-    <div class="login-footer">
-      Designed &amp; Developed by <strong>Daniel Berdellón</strong>
-    </div>
-  </main>
-
+  <script src="static/js/app.js" defer></script>
 </body>
 </html>
