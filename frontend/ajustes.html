@@ -24,6 +24,18 @@
     </section>
 
     <section class="card">
+      <h2>Diseño / Efectos</h2>
+      <p>Selecciona un efecto para la interfaz:</p>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <button class="effect-btn" data-effect="metal">Brillo metálico</button>
+        <button class="effect-btn" data-effect="neon">Neón</button>
+        <button class="effect-btn" data-effect="snow">Nieve</button>
+        <button class="effect-btn" data-effect="none">Sin efecto</button>
+      </div>
+      <p style="margin-top:10px;color:#9fb6d4">El efecto seleccionado se aplica al instante y se guarda.</p>
+    </section>
+
+    <section class="card">
       <h2>Historial & Informes</h2>
       <div class="options-column">
         <button id="openHist" class="option-btn">Ver Historial</button>
@@ -31,27 +43,8 @@
       </div>
     </section>
 
-    <section class="card">
-      <h2>Import / Export</h2>
-      <div style="display:flex;gap:12px;align-items:center">
-        <button id="btnExportBackup" class="btn-metal">Exportar backup</button>
-        <input id="importFile" type="file" accept=".json" />
-        <button id="btnImport" class="btn-ghost">Importar</button>
-      </div>
-    </section>
+    <div style="height:40px"></div>
+    <div class="login-footer"><small>Designed &amp; Developed by <strong>Daniel Berdellón</strong></small></div>
   </main>
-
-  <div class="login-footer">
-    <small>Designed &amp; Developed by <strong>Daniel Berdellón</strong></small>
-  </div>
-
-  <script>
-    // navegación rápida (si app.js no lo tiene)
-    document.addEventListener('DOMContentLoaded', ()=>{
-      document.getElementById('openHist')?.addEventListener('click', ()=> window.location.href='historial.html');
-      document.getElementById('openReports')?.addEventListener('click', ()=> window.location.href='informes.html');
-    });
-  </script>
 </body>
 </html>
-
