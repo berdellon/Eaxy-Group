@@ -48,7 +48,7 @@ h2 {
 /* Inputs */
 input, select {
   width: 100%;
-  padding: 14px;
+  padding: 16px; /* <-- IGUAL PARA QUE TENGAN MISMO TAMAÑO */
   margin: 10px 0;
   border-radius: 8px;
   border: none;
@@ -102,7 +102,8 @@ button:hover {
   <!-- Logo arriba como antes -->
   <img src="static/icons/eaxy_logo_green.svg" class="logo">
 
-  <h2>Acceso</h2>
+  <!-- Nuevo título -->
+  <h2>Bienvenido a Xigroup</h2>
 
   <input id="username" type="text" placeholder="Usuario">
 
@@ -110,7 +111,7 @@ button:hover {
   <input id="pin" type="password" inputmode="numeric" pattern="[0-9]*"
          placeholder="PIN (****)" maxlength="4">
 
-  <!-- Selector de tienda perfecto y coordinado -->
+  <!-- Selector de tienda (mismo tamaño que los demás) -->
   <select id="tiendaSelect">
     <option value="Barcelona">Barcelona</option>
     <option value="Madrid">Madrid</option>
@@ -123,7 +124,7 @@ button:hover {
 
 <!-- Footer corporativo -->
 <div class="footer">
-  Designed & Developed by EAXY © 2025
+  Designed & Developed by Daniel Verdellón © 2025
 </div>
 
 <script src="static/js/app.js"></script>
